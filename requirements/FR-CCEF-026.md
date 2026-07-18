@@ -16,7 +16,7 @@ Users need to be able to interact with the system in their preferred language, a
 - Given the user is authenticated and viewing their account settings
 - When the user selects a different language preference (English or Swedish) and saves the change
 - Then the system shall save the new language preference to the user's account
-- And the system shall immediately reload the interface in the selected language
+- And the system shall immediately update the user interface to reflect the selected language
 - And the system shall display a confirmation message that the language has been updated
 - Given the user's current language is English
 - When the user selects Swedish and saves the change
