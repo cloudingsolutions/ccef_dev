@@ -1,49 +1,45 @@
 # Use Case
 
 - Use Case ID: UC-CCEF-005
-- Title: User generates a forecast from discovered provider usage
-- Product Slice ID: PS-CCEF-001
+- Title: User selects and manages language preference
+- Product Slice IDs: PS-CCEF-001
 - Lifecycle State: Approved
 
 ## Summary
-A registered user generates a future cost forecast using discovered services, inventory, current usage/cost, and historical usage from a connected AWS, Google Cloud, or Azure account.
+Users can select their preferred language (English or Swedish) during onboarding and change it later in account settings, with the system detecting browser/OS language as a default suggestion.
 
 ## Actor
-Registered user
+User going through the onboarding flow or accessing account settings
 
 ## Trigger
-The user has connected a supported provider account and wants a forecast based on actual discovered cloud usage.
+User reaches language selection step during onboarding or navigates to language settings in account management
 
 ## Outcome
-The system generates and displays a provider-based cost forecast using discovered usage and forecast assumptions, while clearly labeling partial or unavailable provider data and avoiding fabricated values.
+User's language preference is set and persisted, affecting the user interface language throughout their session
 
 ## Success Criteria
-- The system uses discovered provider services and usage/cost data to generate the forecast.
-- The system may use historical usage to improve forecasts where available and useful.
-- The user can override or tune pricing and growth assumptions before or after forecast generation.
-- User-provided growth assumptions take priority over system defaults.
-- If the user does not provide growth expectations, the system uses the active versioned benchmark growth assumptions.
-- The user can choose a supported forecast horizon.
-- Partial provider discovery is visible in the forecast basis and missing data is not fabricated.
-- Forecast results, assumptions, benchmark context, partial-data states, and recovery guidance support English and Swedish for the initial release.
-- The user can save a generated forecast to their forecast library with a name and description.
-- The user can edit a saved forecast and choose to save changes as a new version or overwrite the existing forecast.
-- The user can duplicate a saved forecast.
-- The user can delete a saved forecast after explicit confirmation.
-- The user can compare two or more saved forecasts (up to 5) in a side-by-side view.
-- The user can view the version history of a saved forecast.
-- All forecast management actions provide localized (English/Swedish) confirmation dialogs, status messages, and recovery guidance.
+1. System detects user's browser or operating system language
+2. System pre-selects the detected language if it's English or Swedish, otherwise defaults to English
+3. User can manually select English or Swedish from the language options
+4. User's selection is saved to their account profile
+5. Interface immediately updates to reflect the selected language
+6. Language preference persists across sessions and page reloads
+7. User can change their language preference at any time in account settings
+8. System provides language names in both English and Swedish for selection clarity
+9. All user-facing text in the interface translates to the selected language
+10. System maintains language preference separately from content localization settings
+11. Default language selection is clearly presented as a choice, not assumed
+12. Language changes trigger appropriate accessibility announcements for screen readers
 
 ## Explicit Exclusions
-- Reserved instance, savings plan, committed use, or contract purchasing guidance
-- Invoice reconciliation
-- Automated cloud resource changes
+- Languages other than English and Swedish in the initial release
+- Automatic language detection based on IP address or geolocation
+- Content localization for non-user-facing items (emails, reports, etc.)
+- Right-to-left (RTL) language support
+- Language-based feature flags or conditional functionality
+- Automatic translation of user-generated content
 
 ## Linked Requirement IDs
-- FR-CCEF-004
-- FR-CCEF-005
-- FR-CCEF-006
-- FR-CCEF-010  (User dashboard and home experience)
-- FR-CCEF-011  (Provider connection management)
-- FR-CCEF-012  (Forecast management capabilities)
-- NFR-CCEF-013  (Observability and monitoring requirements)
+- FR-CCEF-022
+- FR-CCEF-023
+- NFR-CCEF-008

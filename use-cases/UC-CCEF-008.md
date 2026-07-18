@@ -1,42 +1,47 @@
 # Use Case
 
 - Use Case ID: UC-CCEF-008
-- Title: User receives simple anomaly flags for unusual cost or usage patterns
-- Product Slice ID: PS-CCEF-001
+- Title: User confirms or selects data residency region
+- Product Slice IDs: PS-CCEF-001
 - Lifecycle State: Approved
 
 ## Summary
-A registered user sees simple anomaly flags when cost or usage patterns appear unusual based on historical usage, forecast expectations, or benchmark assumptions, with SMS alerts available when enabled.
+During onboarding, the system infers the user's data residency region from IP address and/or phone number, with Europe as the minimum supported region, and allows users to select an alternative region where legally permitted.
 
 ## Actor
-Registered user
+User completing the onboarding flow after account creation but before accessing core functionality
 
 ## Trigger
-The user's actual, discovered, or forecasted cloud cost or usage pattern appears unusual against available comparison signals.
+User reaches the data residency confirmation step in the onboarding flow
 
 ## Outcome
-The user can identify unusual patterns in the product and receive SMS alerts for anomaly conditions when SMS alerts are enabled with the required phone number, verification, consent, and opt-out state.
+User's data residency region is established and recorded, either through system inference or user selection where permitted
 
 ## Success Criteria
-- The system can flag unusual cost or usage patterns based on historical usage where minimum comparable data is available.
-- The system can flag unusual cost or usage patterns based on forecast expectations.
-- The system can flag unusual cost or usage patterns based on benchmark assumptions and labels benchmark-based flags clearly.
-- The user can see simple anomaly flags in the product experience.
-- Anomaly lifecycle, deduping, threshold, minimum-data, and SMS handoff behavior follow deterministic rules.
-- Insufficient anomaly data states do not fabricate flags and explain recovery or waiting conditions.
-- The user can receive SMS alerts for anomaly conditions when SMS alerts are enabled.
-- The product requires an available phone number before SMS anomaly alerts can be enabled.
-- The product verifies the phone number at a high level before sending SMS anomaly alerts.
-- The product captures or respects user consent for SMS alert delivery before sending SMS anomaly alerts.
+1. System attempts to infer residency from IP address and/or phone number
+2. When inference is confident and region is supported, system pre-selects that region
+3. When inference fails or region is unsupported, system prompts user to select region
+4. Europe is presented as the minimum supported residency region
+5. Users can select another supported region where regulation permits choice
+6. System clearly indicates when residency is inferred vs. user-selected
+7. System prevents selection of unsupported regions with clear explanation
+8. System does not silently assign users to arbitrary regions when residency cannot be determined
+9. Selected or inferred residency is recorded with timestamp and user ID
+10. System provides explanation of what data residency means for the user
+11. User can view their recorded residency in account settings (but not change it after onboarding)
+12. System handles edge cases like VPNs, proxies, and mobile roaming appropriately
+13. Residency determination attempts and outcomes are recorded in the audit trail
 
 ## Explicit Exclusions
-- Advanced anomaly investigation workflows
-- Automated remediation
-- Alert delivery channels other than in-app/dashboard notifications and SMS unless separately defined
+- Data residency options beyond those explicitly supported by the system
+- Automatic residency changes based on detected location changes
+- Residency selection during account creation (separate step)
+- Ability to change residency after initial onboarding completion
+- Residency-based feature flags or conditional functionality
+- Data partitioning or sharding based on residency
+- Legal advice or interpretation of residency regulations
+- Integration with external residency verification services
+- Residency confirmation via government ID or documentation
 
 ## Linked Requirement IDs
-- FR-CCEF-007
-- FR-CCEF-010  (User dashboard and home experience)
-- FR-CCEF-011  (Provider connection management)
-- FR-CCEF-012  (Forecast management capabilities)
-- NFR-CCEF-013  (Observability and monitoring requirements)
+FR-CCEF-032

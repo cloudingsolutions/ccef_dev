@@ -1,49 +1,52 @@
 # Use Case
 
 - Use Case ID: UC-CCEF-003
-- Title: User creates a manual cloud cost forecast
-- Product Slice ID: PS-CCEF-001
+- Title: User creates an account with email and one-time code
+- Product Slice IDs: PS-CCEF-001
 - Lifecycle State: Approved
 
 ## Summary
-A registered user manually defines provider services, usage assumptions, pricing adjustments, growth expectations, budget inputs, and forecast horizon to generate a deterministic future cloud cost forecast.
+A user can create an account using email and a one-time code sent to their email address, providing a passwordless authentication option that still verifies email accessibility.
 
 ## Actor
-Registered user
+Potential user visiting the CCEF website for the first time who prefers passwordless authentication
 
 ## Trigger
-The user wants to estimate future cloud infrastructure costs without connecting a cloud provider account.
+User submits their email address on the sign-up page to request a one-time code
 
 ## Outcome
-The system generates a manual cost forecast for the selected AWS, Google Cloud, or Azure services and displays forecasted costs, assumptions, benchmark basis where used, and any input correction guidance in the responsive web interface.
+User successfully creates an account using the one-time code and is authenticated into the system
 
 ## Success Criteria
-- The user can select or enter cloud services for AWS, Google Cloud, or Azure.
-- The user can provide current or expected usage levels using supported units.
-- The user can define or tune growth expectations.
-- The user can adjust pricing assumptions and selected forecast currency within supported rules.
-- The user can choose a supported forecast horizon.
-- The system generates and displays a forecast from manually entered data using deterministic calculation, rounding, and benchmark rules.
-- Manual forecast creation, saved forecast access, forecast display, budget inputs, assumptions, and forecast outputs are available only within a valid registered-user session and are limited to forecast objects owned by or otherwise authorized for that authenticated user.
-- Invalid numeric inputs are blocked with field-level recovery guidance while preserving valid user input.
-- Forecast setup, errors, assumptions, benchmark explanations, and results support English and Swedish for the initial release.
-- The user can save a manually created forecast to their forecast library with a name and description.
-- The user can edit a saved forecast and choose to save changes as a new version or overwrite the existing forecast.
-- The user can duplicate a saved forecast.
-- The user can delete a saved forecast after explicit confirmation.
-- The user can compare two or more saved forecasts (up to 5) in a side-by-side view.
-- The user can view the version history of a saved forecast.
-- All forecast management actions provide localized (English/Swedish) confirmation dialogs, status messages, and recovery guidance.
+1. System validates email format and checks that email is not already registered
+2. System generates and sends a secure one-time code to the user's email
+3. User receives the one-time code email and enters it into the verification form
+4. System validates the one-time code is correct and not expired
+5. System creates a new user account for verified email
+6. User is authenticated and redirected to complete the onboarding flow
+7. User can log in using email and one-time code for future sessions
+8. System enforces rate limiting on code generation to prevent abuse
+9. Account is created with compliant onboarding defaults applied
+10. User receives clear feedback about code expiration and resend options
 
 ## Explicit Exclusions
-- Invoice reconciliation
-- Billing system replacement
-- Automated cloud resource changes
-- Hidden currency conversion for manual inputs
+- Password creation or management for this authentication method
+- Social Sign-On options (Google/Apple) for this flow
+- Phone number collection during initial registration (handled in separate flow)
+- Language preference setting during initial registration (handled in post-onboarding)
+- Code reuse prevention (each code can only be used once)
 
 ## Linked Requirement IDs
-- FR-CCEF-005
-- FR-CCEF-006
-- FR-CCEF-010  (User dashboard and home experience)
-- FR-CCEF-012  (Forecast management capabilities)
-- NFR-CCEF-013  (Observability and monitoring requirements)
+FR-CCEF-003
+FR-CCEF-006
+FR-CCEF-007
+FR-CCEF-009
+FR-CCEF-011
+FR-CCEF-012
+FR-CCEF-015
+NFR-CCEF-001
+NFR-CCEF-002
+NFR-CCEF-003
+NFR-CCEF-004
+NFR-CCEF-005
+NFR-CCEF-006

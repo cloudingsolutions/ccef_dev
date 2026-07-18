@@ -1,74 +1,130 @@
-Requirement ID: FR-CCEF-007
-Title: Budget alerts and anomaly detection
-Requirement Type: functional
-Product Slice IDs: PS-CCEF-001
-Lifecycle State: Approved
+# Requirement
 
-# Requirement Statement
-The system shall allow users to define budget thresholds for forecasted or actual/discovered cloud costs and provide alerts when forecasted costs meet or exceed a configured budget threshold, when actual or discovered usage indicates budget risk, and flag unusual cost or usage patterns based on historical usage, forecast expectations, or benchmark assumptions. The system shall support SMS alerts for budget-risk and anomaly conditions when phone, verification, consent, opt-out, localization, minimization, and delivery safeguards are satisfied.
+- Requirement ID: FR-CCEF-007
+- Title: Provide Data Subject Rights for Personal Data
+- Requirement Type: functional
+- Product Slice IDs: PS-CCEF-001
+- Lifecycle State: Approved
 
-# Rationale
-This requirement enables proactive cost management by alerting users to potential budget overruns and unusual spending patterns, helping them avoid unexpected charges.
+## Requirement Statement
+The system shall provide mechanisms for users to exercise their data subject rights under GDPR, including access, rectification, erasure, and portability of their personal data.
 
-# Acceptance Criteria
-- Given a user wants to manage cloud cost risks
-- When the user defines budget thresholds for forecasted or actual/discovered cloud costs
-- Then the system shall allow the configuration of budget thresholds (minimum $1, maximum $1,000,000)
-- And the system shall alert users when forecasted costs meet or exceed a configured budget threshold (>= 100% of threshold)
-- And the system shall alert users when actual or discovered usage indicates budget risk (>= 85% of monthly budget by mid-month)
-- And the system shall flag unusual cost or usage patterns based on historical usage, forecast expectations, or benchmark anomalies (>30% deviation from 7-day moving average)
-- Given budget-risk or anomaly conditions are met
-- When SMS alerts are enabled and eligible
-- Then the system shall send SMS alerts only when the alert is eligible and phone, verification, consent, opt-out, localization, minimization, and delivery safeguards are satisfied including:
-  * Valid phone number in E.164 format
-  * Email/phone verification completed within last 90 days
-  * Explicit opt-in consent for SMS alerts (separate from general notifications)
-  * No recent opt-out (minimum 30 days since opt-out)
-  * Message localized to user's selected language (English/Swedish)
-  * Message length <160 characters for single SMS delivery
-  * Daily limit of 3 SMS alerts per user to prevent message fatigue
-- And users shall see deduplicated budget-risk alerts in-app/dashboard (max 1 alert per budget per 24 hours)
-- And users shall see simple anomaly flags when cost or usage patterns meet deterministic anomaly rules (variance >30% from forecast or 3-standard deviation from historical mean)
-- And the system shall log all alert generation and delivery attempts for observability and compliance
-- Given the system encounters an error sending an SMS alert
-- When attempting to deliver alert
-- Then the system shall log the error, retry up to 2 times with exponential backoff, and fall back to in-app notification only
+## Rationale
+GDPR Articles 15-22 grant individuals specific rights regarding their personal data, including the right to access, rectify, erase, and port their data. As a data controller processing user personal data (email, name) for account functionality, the system must provide accessible mechanisms for users to exercise these rights. This requirement ensures compliance with data subject rights provisions and builds user trust through transparency and control over personal information.
 
-# Explicit Exclusions
-- Alert delivery channels other than in-app/dashboard notifications and SMS, unless separately defined
-- Automated budget adjustments
-- Predictive budget forecasting beyond simple threshold alerts
-- Complex machine learning-based anomaly detection
+## Acceptance Criteria
+- Given an authenticated user requesting access to their personal data
+- When the user initiates a Data Subject Access Request (DSAR)
+- Then the system shall provide a copy of the personal data being processed (email, name, account metadata)
+- And the system shall provide the data in a structured, commonly used, machine-readable format
+- And the system shall provide the information within one month of the request (extendable by two months for complex cases)
+- And the system shall provide the information free of charge
+- 
+- Given an authenticated user requesting correction of inaccurate personal data
+- When the user submits a rectification request for their personal data
+- Then the system shall update the personal data to be accurate
+- And the system shall notify any third parties to whom the data has been disclosed of the rectification (where possible and proportionate)
+- 
+- Given an authenticated user requesting deletion of their personal data
+- When the user submits an erasure request (right to be forgotten)
+- Then the system shall delete the personal data without undue delay
+- And the system shall cease further dissemination of the data (particularly online)
+- And the system shall notify third parties to whom the data has been disclosed of the erasure request (where possible and proportionate)
+- 
+- Given an authenticated user requesting portability of their personal data
+- When the user submits a data portability request
+- Then the system shall provide the personal data in a structured, commonly used, machine-readable format
+- And the format shall allow for easy transmission to another data controller
+- And the system shall ensure the data is provided in a way that enables reuse
+- 
+- Given a user requesting information about data processing activities
+- When the user makes an inquiry about how their personal data is processed
+- Then the system shall provide transparent information about processing purposes, legal basis, data sharing, retention periods, and rights
+- 
+- Given a user wishing to object to processing of their personal data
+- When the user submits an objection to processing
+- Then the system shall cease processing the personal data unless there are compelling legitimate grounds
+- And the system shall inform the user of their right to obtain judicial remedy and to complain to a supervisory authority
 
-# Constraints
-- Users can define budget thresholds for forecasted or actual/discovered cloud costs (minimum $1, maximum $1,000,000)
-- The system can alert users when forecasted costs meet or exceed a configured budget threshold (>= 100% of threshold)
-- The system can alert users when actual or discovered usage indicates budget risk (>= 85% of monthly budget by mid-month)
-- The system shall flag unusual cost or usage patterns using the following deterministic anomaly rules:
-  * Historical usage based: >30% deviation from 7-day moving average
-  * Forecast expectations based: >30% variance from forecasted values
-  * Benchmark assumptions based: >3-standard deviation from historical mean
-- Users can see deduplicated budget-risk alerts in-app/dashboard (max 1 alert per budget per 24 hours)
-- Users can receive SMS alerts for budget-risk conditions when SMS alerts are enabled and eligible
-- Users can see simple anomaly flags when cost or usage patterns meet the deterministic anomaly rules defined above
-- Users can receive SMS alerts for anomaly conditions when SMS alerts are enabled and eligible
-- SMS alerts shall only be sent when the alert is eligible and phone, verification, consent, opt-out, localization, minimization, and delivery safeguards are satisfied
-- The system shall implement circuit breaker pattern for SMS provider API calls (trip after 5 failures, 30-second timeout)
-- All alert events shall be logged with timestamp, alert type, recipient, delivery method, and outcome for observability and compliance
+## Explicit Exclusions
+- Requests for data that is exempt from disclosure under GDPR (legal professional privilege, etc.)
+- Requests that would adversely affect the rights and freedoms of others
+- Requests for data that is necessary for compliance with a legal obligation
+- Requests for data that is necessary for the establishment, exercise or defense of legal claims
+- Requests that are manifestly unfounded or excessive (particularly repetitive)
+- Processing of anonymized data that cannot be linked to an individual
+- Processing of data for archiving purposes in the public interest, scientific research, or statistical purposes
+- Exercise of data subject rights for data processed solely for journalistic, academic, artistic or literary purposes
 
-# Validation Method
-- automated test
-- manual QA
-- code review
+## Constraints
+- Must verify user identity before processing any data subject rights request
+- Must provide clear information about how to submit data subject rights requests
+- Must respond to requests without undue delay and within the legally mandated timeframes
+- Must maintain records of data subject rights requests and responses for compliance purposes
+- Must provide information about data subject rights in the privacy notice and terms of service
+- Must not charge fees for data subject rights requests unless they are manifestly unfounded or excessive
+- Must inform users of their right to lodge complaints with supervisory authorities
+- Must inform users of their right to seek judicial remedy
+- Must ensure data subject rights mechanisms are accessible to users with disabilities
 
-# References
+## Validation Method
+- Automated test: Unit tests for data subject rights request handling logic
+- Automated test: Integration tests simulating complete data subject rights workflow
+- Manual QA: End-to-end testing with various data subject rights scenarios (access, rectify, erase, port)
+- Security review: Validation of identity verification and data protection during rights execution
+- Architecture review: Confirmation of proper separation of concerns in data subject rights management
+- Compliance review: Verification of adherence to GDPR data subject rights requirements
+- Legal review: Confirmation of compliance with applicable privacy regulations
+- User acceptance testing: Validation of usability and clarity of data subject rights interfaces
+
+## References
+Approved artifacts this requirement should be interpreted with.
+
 - Related Requirements, non-blocking:
+  - FR-CCEF-001 (Google SSO support)
+  - FR-CCEF-002 (Apple SSO support)
+  - FR-CCEF-003 (Email one-time code fallback)
+  - FR-CCEF-004 (Account linking/unlinking)
+  - FR-CCEF-005 (Email+Password account creation)
+  - FR-CCEF-006 (User consent management)
 - ADRs:
+  - ADR-0001 (Modular Monolith with Clear Boundaries Approach)
+  - ADR-0002 (GDPR-Compliant Data Handling Approach)
 - API / Data Contracts:
+  - GDPR Data Subject Rights Framework Specifications
 - Policies / Regulations:
+  - GDPR Article 12 (Transparent information, communication and modalities)
+  - GDPR Article 13 (Information to be provided where personal data are collected)
+  - GDPR Article 14 (Information to be provided where personal data have not been obtained from data subject)
+  - GDPR Article 15 (Right of access by the data subject)
+  - GDPR Article 16 (Right to rectification)
+  - GDPR Article 17 (Right to erasure ('right to be forgotten'))
+  - GDPR Article 18 (Right to restriction of processing)
+  - GDPR Article 20 (Right to data portability)
+  - GDPR Article 21 (Right to object)
 - Design Artifacts:
-- Other:
+  - ccef-ui-ux/data-subject-rights.html (Data subject rights interface)
+  - ccef-api/dsar-endpoints.yaml (Data subject rights API specifications)
 
-# Traceability
-- Product Slices: PS-CCEF-001
-- Use Cases: UC-CCEF-007, UC-CCEF-008
+## Traceability
+Planning objects this requirement supports or constrains.
+
+- Product Slices:
+  - PS-CCEF-001
+- Use Cases:
+  - UC-CCEF-001
+  - UC-CCEF-002
+  - UC-CCEF-003
+  - UC-CCEF-004
+  - UC-CCEF-005
+  - UC-CCEF-006
+  - UC-CCEF-007
+  - UC-CCEF-008
+
+Traceability rules:
+- Every Requirement not marked Out of Scope must trace to at least one Product Slice.
+- Every functional Requirement not marked Out of Scope must trace to at least one Use Case not marked Out of Scope or approved Product Slice objective.
+- Every Use Case not marked Out of Scope must be covered by one or more functional Requirements not marked Out of Scope before implementation begins.
+- Cross-cutting Requirements not marked Out of Scope may trace directly to the Product Slice when Use Case linkage would be artificial.
+- Out of Scope Use Cases and Requirements are excluded from active traceability, coverage, and consistency checks. Links to or from Out of Scope artifacts may remain as historical/contextual references, but must not satisfy active implementation gates.
+- Implementation work not covered by an approved Requirement is speculative and should be surfaced as a planning gap or marked as over-engineering.

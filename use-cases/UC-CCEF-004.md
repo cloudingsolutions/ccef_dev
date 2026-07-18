@@ -1,41 +1,46 @@
 # Use Case
 
 - Use Case ID: UC-CCEF-004
-- Title: User connects a cloud provider account for discovery
-- Product Slice ID: PS-CCEF-001
+- Title: User provides and verifies phone number for SMS consent
+- Product Slice IDs: PS-CCEF-001
 - Lifecycle State: Approved
 
 ## Summary
-A registered user securely provides supported read-only access configuration for AWS, Google Cloud, or Azure so the system can discover current services, inventory, usage, cost, and useful historical usage where available.
+After account creation, users provide and verify their phone number to enable SMS alert functionality, with explicit consent captured for GDPR compliance.
 
 ## Actor
-Registered user
+Registered user who has completed account creation but not yet verified phone number
 
 ## Trigger
-The user wants the system to forecast costs using provider-discovered cloud data instead of only manual entries.
+User navigates to phone verification step in onboarding flow or accesses phone settings in account management
 
 ## Outcome
-The cloud provider connection is stored and usable for retrieving provider usage and inventory data within the slice scope using the minimum access needed for discovery-oriented retrieval, or the user receives safe recovery guidance when setup fails or is incomplete.
+User's phone number is verified and explicit consent is captured for SMS communications
 
 ## Success Criteria
-- The user can securely provide cloud provider access information for AWS, Google Cloud, or Azure.
-- The system securely stores and uses the required provider credentials or access configuration.
-- The product requests or documents only the minimum provider permissions required for discovery, inventory, usage, cost, and useful historical usage retrieval, and does not require write or remediation privileges.
-- Provider connection failures explain safe recovery options without exposing secrets.
-- For connected providers, the system can retrieve services currently in use.
-- For connected providers, the system can retrieve relevant inventory and usage/cost data.
-- Where available and useful for forecasting, the system can retrieve historical usage data.
-- Partial discovery distinguishes available and unavailable categories without fabricating provider data.
+1. User enters their phone number in the correct international format
+2. System validates phone number format and checks if already associated with another account
+3. System sends a one-time verification code via SMS to the provided number
+4. User receives the SMS and enters the verification code
+5. System validates the code is correct and not expired
+6. System marks the phone number as verified for the user's account
+7. System presents a clear consent request for SMS alerts
+8. User explicitly opts in to receive SMS alerts (not pre-checked)
+9. System records the consent with timestamp and user ID for audit purposes
+10. User receives confirmation that phone verification and consent are complete
+11. System enforces rate limiting on SMS code generation to prevent abuse
+12. User can update or remove their phone number in account settings with appropriate consent handling
+13. Consent actions are recorded in the audit trail for compliance purposes
 
 ## Explicit Exclusions
-- Automated remediation of cost issues
-- Automated cloud resource changes
-- Advanced FinOps approval workflows
+- Phone number collection during initial account creation (separate from verification)
+- SMS alert delivery functionality (covered in other use cases)
+- Phone number porting or carrier change handling
+- International phone number restrictions based on regulatory requirements
+- Voice call verification as alternative to SMS
 
 ## Linked Requirement IDs
-- FR-CCEF-004
-- FR-CCEF-005
-- FR-CCEF-010  (User dashboard and home experience)
-- FR-CCEF-011  (Provider connection management)
-- FR-CCEF-012  (Forecast management capabilities)
-- NFR-CCEF-013  (Observability and monitoring requirements)
+- FR-CCEF-018
+- FR-CCEF-019
+- FR-CCEF-020
+- FR-CCEF-021

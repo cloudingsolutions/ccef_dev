@@ -1,40 +1,53 @@
 # Use Case
 
 - Use Case ID: UC-CCEF-001
-- Title: User creates an account with compliant onboarding defaults
-- Product Slice ID: PS-CCEF-001
+- Title: User creates an account with Google or Apple SSO
+- Product Slice IDs: PS-CCEF-001
 - Lifecycle State: Approved
 
 ## Summary
-A new user registers for the cloud cost estimator, completes initial account setup, and receives an onboarding configuration that determines or confirms a supported data residency region and selected default language without silently assigning unsupported or indeterminate residency to an arbitrary region.
+A user can create an account using Google or Apple Single Sign-On (SSO) providers, which provides a secure and convenient authentication method without requiring password management.
 
 ## Actor
-New registered user
+Potential user visiting the CCEF website for the first time
 
 ## Trigger
-The user wants to start using the cloud cost estimator for the first time.
+User clicks on "Continue with Google" or "Continue with Apple" button on the landing page or sign-in page
 
 ## Outcome
-The user either has an authenticated account with a supported initial data residency region and selected default language, or reaches a clear designed stop state when residency is unsupported or indeterminate and cannot be assigned safely.
+User successfully creates an account and is authenticated into the system, with their account linked to their Google or Apple identity
 
 ## Success Criteria
-- The user can create an account and sign in after registration when onboarding reaches a supported residency outcome.
-- During onboarding, the product determines an initial data residency outcome using available signals such as IP address and/or phone number where those signals are available and appropriate.
-- Europe is supported as a minimum initial data residency region for the initial release.
-- Where applicable regulation permits user choice, the user can select from supported data residency regions during onboarding.
-- If residency is unsupported or cannot be determined with enough confidence under the approved residency decision policy, the product does not silently assign the user to an arbitrary region and instead presents a clear unsupported or indeterminate residency outcome as a designed stop state.
-- Unsupported or indeterminate residency guidance explains what happened, whether the user can retry/correct inputs/contact support, and what cannot proceed until a supported residency outcome exists.
-- The user can select a supported default language during onboarding, with English and Swedish supported in the initial release.
+1. User is redirected to the respective provider's authentication page
+2. User successfully authenticates with their Google or Apple account
+3. User is redirected back to CCEF with a valid authentication token
+4. System creates a new user account linked to the provider account
+5. User is authenticated and redirected to the post-onboarding flow
+6. User's basic profile information (name, email) is populated from the provider
+7. Account is created with compliant onboarding defaults applied
+8. User receives a success message indicating account creation was successful
+9. An audit log entry is created for the SSO sign-up attempt
+10. Explicit user consent is obtained and recorded before processing personal data (email, name)
+11. A GDPR-compliant privacy notice is presented before collecting personal data
 
 ## Explicit Exclusions
-- Team or organization role management beyond basic registered-user access
-- Support for privacy/compliance regimes beyond the initial GDPR baseline unless separately defined
-- Arbitrary residency assignment for unsupported or indeterminate users
+- Password creation or management for SSO accounts
+- Manual email verification for SSO accounts (handled by provider)
+- Phone number collection during SSO account creation (handled in separate flow)
+- Language preference setting during initial SSO signup (handled in post-onboarding)
 
 ## Linked Requirement IDs
-- FR-CCEF-001
-- FR-CCEF-002  (User sign-in and basic account management)
-- FR-CCEF-010  (User dashboard and home experience)
-- FR-CCEF-011  (Provider connection management)
-- FR-CCEF-012  (Forecast management capabilities)
-- NFR-CCEF-013  (Observability and monitoring requirements)
+FR-CCEF-001
+FR-CCEF-002
+FR-CCEF-003
+FR-CCEF-004
+FR-CCEF-005
+FR-CCEF-006
+FR-CCEF-007
+NFR-CCEF-001
+NFR-CCEF-002
+NFR-CCEF-003
+NFR-CCEF-004
+NFR-CCEF-005
+NFR-CCEF-006
+NFR-CCEF-007

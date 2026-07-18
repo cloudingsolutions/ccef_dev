@@ -1,65 +1,113 @@
-Requirement ID: FR-CCEF-005
-Title: Cloud cost forecasting capabilities
-Requirement Type: functional
-Product Slice IDs: PS-CCEF-001
-Lifecycle State: Approved
+# Requirement
 
-# Requirement Statement
-The system shall support two forecast paths: manual forecasting where users enter cloud services, usage assumptions, pricing adjustments, growth expectations, budget inputs, and forecast horizon; and provider-based forecasting where users connect a supported cloud provider account and the system retrieves current services, inventory, usage/cost, and useful historical usage through read-only provider APIs. The system shall allow users to generate forecasts from both manual entry and discovered provider data, override or tune pricing and growth assumptions, and choose a supported forecast horizon.
+- Requirement ID: FR-CCEF-005
+- Title: Validate Email Address Format
+- Requirement Type: functional
+- Product Slice IDs: PS-CCEF-001
+- Lifecycle State: Approved
 
-# Rationale
-This requirement defines the core forecasting functionality that allows users to estimate future cloud costs through manual input or by leveraging actual usage data from connected cloud providers.
+## Requirement Statement
+The system shall validate the format of email addresses provided during account creation and authentication flows.
 
-# Acceptance Criteria
-- Given a registered user has completed onboarding and reached a supported residency outcome
-- When the user wants to create a cloud cost forecast
-- Then the user shall be able to manually create a deterministic cloud cost forecast for AWS, Google Cloud, or Azure by entering cloud services, usage assumptions, pricing adjustments, growth expectations, budget inputs, and forecast horizon with all monetary values rounded to 2 decimal places
-- And the user shall be able to connect an AWS, Google Cloud, or Azure account with read-only minimum necessary access using OAuth 2.0 or API keys
-- And the system shall allow the system to retrieve supported usage, cost, inventory, and historical data from the connected provider with HTTP 200 OK responses or appropriate error codes
-- And the user shall be able to generate a forecast from manually entered data with results rounded to 2 decimal places and returned within 5 seconds for forecasts <12 months horizon
-- And the user shall be able to generate a forecast from discovered provider usage without fabricating missing provider data, marking any estimated values with `isEstimated: true` flag
-- And the user shall be able to override or tune pricing and growth expectations with validation ensuring values are between -50% and +500% of baseline
-- And the user shall be able to generate a forecast using versioned benchmark growth assumptions (v1.0, updated quarterly) when no user growth input is provided
-- And the user shall be able to choose a supported forecast horizon (1, 3, 6, 12, or 24 months)
-- And the user shall be able to view forecasted cloud costs in a responsive, accessible web interface with chart/table alternatives showing values rounded to 2 decimal places
-- Given the system encounters an error retrieving provider data
-- When generating a forecast
-- Then the system shall return partial forecast with available data and clear indication of missing data sources
+## Rationale
+Validating email address format ensures that only properly formatted email addresses are accepted, reducing user errors, preventing invalid data entry, and maintaining data quality. This is a basic but essential validation step for any system that uses email as an identifier or communication channel.
 
-# Explicit Exclusions
-- Advanced optimization recommendations such as reserved instance, savings plan, committed use, or contract purchasing guidance
-- Automated cloud resource changes
-- Automated remediation of cost issues
-- Invoice reconciliation or billing system replacement
-- Team or organization role management beyond basic registered-user access
-- Complex FinOps workflows, approval flows, or chargeback/showback reporting
+## Acceptance Criteria
+- Given a user providing an email address in any input field
+- When the user submits the form or moves focus away from the email input
+- Then the system shall validate that the email address conforms to RFC 5322 standard (with common-sense restrictions)
+- And the system shall accept email addresses that follow the local-part@domain format
+- And the system shall reject email addresses that are empty or null
+- And the system shall reject email addresses that are missing the @ symbol
+- And the system shall reject email addresses that are missing a domain part after the @ symbol
+- And the system shall reject email addresses that are missing a local-part before the @ symbol
+- And the system shall accept email addresses with valid subdomains (e.g., user@mail.example.com)
+- And the system shall accept email addresses with valid special characters in the local-part (dots, hyphens, underscores, plus signs, equals)
+- And the system shall accept email addresses with quoted local-parts when properly formatted (per RFC 5322)
+- And the system shall reject email addresses with spaces, tabs, or control characters
+- And the system shall reject email addresses with invalid characters (such as <, >, [, ], :, ;, @, \, comma when outside quotes)
+- And the system shall reject email addresses with consecutive dots in the local-part
+- And the system shall reject email addresses that start or end with a dot in the local-part
+- And the system shall provide clear, user-friendly error messages for invalid email formats (e.g., "Please enter a valid email address")
+- And the system shall highlight the invalid input field to guide user correction (using visual indicators)
+- And the system shall prevent form submission when email validation fails
+- And the system shall perform validation both on the client-side (for immediate feedback) and server-side (for security)
+- And the system shall limit email address length to 254 characters maximum (per RFC 5321)
+- And the system shall limit local-part length to 64 characters maximum (per RFC 5321)
+- And the system shall treat email addresses as case-insensitive for comparison and deduplication purposes
+- And the system shall normalize email addresses to lowercase before storage or comparison
 
-# Constraints
-- Users can manually provide or tune pricing and growth expectations within realistic bounds (-50% to +500% of baseline)
-- If the user does not provide growth expectations, the system uses versioned benchmark growth assumptions (v1.0, updated quarterly based on public cloud provider pricing trends)
-- Where historical usage is available, the system may use it to improve forecasts with a maximum lookback of 24 months
-- User-provided growth assumptions take priority over system defaults
-- Forecast formulas shall round all monetary values to exactly 2 decimal places using standard rounding rules (half-up)
-- Forecast formulas, supported units, currency rules (supported currencies: USD, EUR, SEK), horizons, and benchmark versions are deterministic enough for test oracles with output variance not exceeding ±0.01% given identical inputs
-- Users can choose a supported forecast horizon (1, 3, 6, 12, or 24 months)
-- The responsive web experience must target WCAG 2.2 AA and remain usable at mobile, tablet, small desktop, and desktop layouts
-- Forecast generation shall complete within 5 seconds for manual forecasts and 30 seconds for provider-based forecasts <12 months horizon
-- The system shall cache provider data for up to 1 hour to reduce API calls while ensuring data freshness
-- For test oracle purposes, forecast calculations shall produce identical results given identical inputs, with monetary values rounded to 2 decimal places and percentage values rounded to 4 decimal places
+## Explicit Exclusions
+- Verification that the email domain actually exists (DNS MX record check)
+- Verification that a specific mailbox exists at the given address (would require sending a verification email)
+- Validation of internationalized email addresses (Unicode characters in local-part or domain)
+- Enforcement of specific email provider restrictions (e.g., only allowing @company.com)
+- Checking if the email address is on a suppression list or has bounced previously
+- Validation of email length beyond basic syntactic limits
+- Handling of email address case sensitivity (treated as case-insensitive for comparison)
+- Integration with email verification services or APIs
+- Long-term storage or tracking of email validation history
+- Validation of email addresses imported from external sources or bulk operations
 
-# Validation Method
-- automated test
-- manual QA
-- code review
+## Constraints
+- Must use a robust email validation approach that balances accuracy with usability
+- Must not be overly restrictive to avoid rejecting valid but uncommon email formats
+- Must not be overly permissive to avoid accepting clearly invalid formats
+- Must handle email addresses up to a reasonable maximum length (254 characters per RFC 5321)
+- Must perform validation efficiently to avoid noticeable delays in user interaction
+- Must provide validation results in real-time as the user types or immediately on blur
+- Must maintain consistency between client-side and server-side validation logic
+- Must validate email addresses in all contexts where they are accepted as input
+- Must treat email addresses as case-insensitive for comparison and deduplication purposes
+- Must not rely on client-side validation alone for security-critical decisions
+- Must sanitize input to prevent injection attacks through email fields
 
-# References
+## Validation Method
+- Automated test: Unit tests for email validation function with comprehensive test cases
+- Automated test: Property-based testing for email validation edge cases
+- Manual QA: Form testing with various valid and invalid email formats
+- Security review: Validation that email validation does not introduce injection vulnerabilities
+- Architecture review: Confirmation that validation is properly layered (client and server)
+- Performance testing: Verification of validation speed under load
+- Compliance review: Verification of alignment with email standards (RFC 5322, RFC 6531)
+
+## References
+Approved artifacts this requirement should be interpreted with.
+
 - Related Requirements, non-blocking:
+  - FR-CCEF-001 (Google SSO support)
+  - FR-CCEF-002 (Apple SSO support)
+  - FR-CCEF-003 (Email one-time code fallback)
+  - FR-CCEF-006 (Email input fields in forms)
 - ADRs:
+  - ADR-0001 (Modular Monolith with Clear Boundaries Approach)
 - API / Data Contracts:
+  - HTML5 email input type specification
+  - RFC 5322 (Internet Message Format)
+  - RFC 6531 (SMTPUTF8 Extension)
 - Policies / Regulations:
+  - W3C HTML Living Standard: input type=email
+  - WHATWG HTML Standard: email state
+  - IEEE Std 1003.1-2017 (POSIX.1) definition of valid email address
 - Design Artifacts:
+  - ccef-ui-ux/prototype/index.html (Email input fields and validation)
 - Other:
+  - Google's libphonenumber project (for inspiration on robust validation)
+  - Email validation libraries and their test suites (as reference)
+  - OWASP Input Validation Cheat Sheet
 
-# Traceability
-- Product Slices: PS-CCEF-001
-- Use Cases: UC-CCEF-003, UC-CCEF-004, UC-CCEF-005, UC-CCEF-006
+## Traceability
+Planning objects this requirement supports or constrains.
+
+- Product Slices:
+  - PS-CCEF-001
+- Use Cases:
+  - UC-CCEF-001
+
+Traceability rules:
+- Every Requirement not marked Out of Scope must trace to at least one Product Slice.
+- Every functional Requirement not marked Out of Scope must trace to at least one Use Case not marked Out of Scope or approved Product Slice objective.
+- Every Use Case not marked Out of Scope must be covered by one or more functional Requirements not marked Out of Scope before implementation begins.
+- Cross-cutting Requirements not marked Out of Scope may trace directly to the Product Slice when Use Case linkage would be artificial.
+- Out of Scope Use Cases and Requirements are excluded from active traceability, coverage, and consistency checks. Links to or from Out of Scope artifacts may remain as historical/contextual references, but must not satisfy active implementation gates.
+- Implementation work not covered by an approved Requirement is speculative and should be surfaced as a planning gap or marked as over-engineering.

@@ -1,40 +1,44 @@
 # Use Case
 
 - Use Case ID: UC-CCEF-006
-- Title: User reviews forecast results and basic cost insights
-- Product Slice ID: PS-CCEF-001
+- Title: User manages basic account settings
+- Product Slice IDs: PS-CCEF-001
 - Lifecycle State: Approved
 
 ## Summary
-A registered user views forecasted cloud costs and basic optimization recommendations that identify likely cost drivers, unusually high projected growth, underused or oversized resources where detectable, and services that may need review.
+Authenticated users can update their basic account information including name, default language, and contact preferences through the account settings interface.
 
 ## Actor
-Registered user
+Authenticated user logged into the CCEF system
 
 ## Trigger
-The user has generated a manual or provider-based forecast and needs to understand the likely cost drivers.
+User navigates to the account settings page from the user menu or navigation
 
 ## Outcome
-The user can see forecasted costs and informational cost optimization guidance in the responsive web interface, including accessible chart/table alternatives, localized explanations, and clear insufficient-data states when an insight cannot be produced.
+User successfully updates their account information and receives confirmation of the changes
 
 ## Success Criteria
-- The user can view forecasted cloud costs in a responsive web interface.
-- The system identifies services or resources with unusually high projected cost growth where supported by available data.
-- The system identifies underused or potentially oversized resources where detectable from available usage data.
-- The system identifies services that may benefit from pricing or usage review.
-- The system identifies forecasted cost drivers that should be investigated.
-- Recommendations are informational and do not automatically change cloud resources.
-- If available data is insufficient for an insight, the product explains that limitation and avoids implying certainty.
-- Results, insights, insufficient-data explanations, charts/tables, and recovery guidance support English and Swedish for the initial release.
+1. User can view their current account information (name, email, language preference)
+2. User can update their display name with validation (reasonable length, no prohibited characters)
+3. User can update their default language preference (English/Swedish)
+4. User can manage basic contact preferences (email notifications, etc.)
+5. System validates all inputs before saving changes
+6. System provides immediate feedback on success or validation errors
+7. Changed information persists across sessions and is reflected throughout the interface
+8. System maintains audit trail of account modification attempts
+9. User receives confirmation when changes are successfully saved
+10. Invalid inputs are rejected with clear, specific error messages
+11. Account modification attempts are recorded in the audit trail
 
 ## Explicit Exclusions
-- Advanced optimization recommendations such as reserved instance, savings plan, committed use, or contract purchasing guidance
-- Automated remediation
-- Automated cloud resource changes
+- Advanced profile information (profile picture, bio, etc.)
+- Social media account linking/unlinking
+- Two-factor authentication setup or management
+- Data export or deletion requests (covered in privacy use cases)
+- Payment method or billing information management
+- Provider connection management (covered in other slices)
+- Account closure or deletion (deferred to later slice)
+- Language preferences beyond English and Swedish
 
 ## Linked Requirement IDs
-- FR-CCEF-005
-- FR-CCEF-006
-- FR-CCEF-010  (User dashboard and home experience)
-- FR-CCEF-012  (Forecast management capabilities)
-- NFR-CCEF-013  (Observability and monitoring requirements)
+FR-CCEF-024, FR-CCEF-025, FR-CCEF-026, FR-CCEF-027, FR-CCEF-028, FR-CCEF-029, FR-CCEF-030

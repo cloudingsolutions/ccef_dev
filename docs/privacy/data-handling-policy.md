@@ -140,7 +140,4 @@ This policy shall be reviewed:
 
 ## Related Requirements
 
-- PRI-CCEF-009: Data retention, export, deletion, and provider-disconnect behavior
-- PRI-CCEF-003: Privacy controls for account/data export, deletion, and provider disconnect
-- NFR-CCEF-008: Localization and accessibility compliance
-- NFR-CCEF-013: Observability and monitoring requirements
+[List of Requirements to be updated]
