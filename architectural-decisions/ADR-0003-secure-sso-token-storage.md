@@ -1,0 +1,43 @@
+# Architectural Decision Record
+
+- ADR ID: ADR-0003
+- Title: Secure SSO Token Storage and Encryption/KMS Design
+- Status: Approved
+- Product Slice IDs: PS-CCEF-001
+- Related Requirement IDs: NFR-CCEF-001, FR-CCEF-001, FR-CCEF-002
+- Related Milestone IDs: (to be set during milestone planning)
+- Decision: The SSO token storage subsystem will use AES-256-GCM per-user data keys encrypted under a unique key-encrypting-key (KEK) held in a hardware security module or cloud KMS with dual-control and split-knowledge; tokens will never be stored in plaintext anywhere, and all cryptographic operations will be logged for audit and GDPR compliance.
+- Context: SSO authentication tokens (access/id tokens) must be stored securely to prevent disclosure or misuse. Current requirement lacks concrete implementation/security-design evidence for encryption, key management, audit logging, or GDPR/data-handling enforcement.
+- Options Considered:
+  - Store tokens in plaintext in database (rejected – violates confidentiality)
+  - Use AES-128 only (rejected – cryptographic agility constraint for high-assurance system)
+  - Store user encryption keys in app server memory (rejected – memory-scraping risk; needs HSM/KMS)
+  - No per-user key derivation; rely solely on master key (rejected – loss of single master key causes mass breach)
+  - Use RSA-OAEP or EC keys instead of symmetric AES (rejected – performance, KEK complexity, less common in application token storage today)
+- Consequences:
+  - *Positive*: tokens cannot be decrypted without the KEK and user-specific data key; dual-control and split-knowledge limit insider risk; audit logs create immutable evidence trail; GDPR right-to-erasure can be satisfied by zeroising user keys and logging the act; allows system architects to plan cryptographic workbench without ambiguity.
+  - *Negative*: adds operational complexity (key rotation, dual-control); initial implementation cost for KMS/HSM integration; requires secure deletion routines; runtime CPU/memory overhead for authenticated encryption/decryption.
+  - *Risks*: accidental zeroisation of KEK (catastrophic), improper master-key backup, key rotation gaps leading to non-rotation for long-lived sessions.
+- Constraints Imposed:
+  - Must use AES-256-GCM or FIPS-validated equivalent
+  - Must generate unique IV per encryption operation, unpredictable source
+  - Must apply constant-time operations for all comparisons and decryption paths
+  - Must implement zeroisation of plaintext plaintext buffers immediately after use
+  - Must enforce user-level data key derivation per token or user session
+  - Must store KEK in FIPS 140-2 Level 2 or 3 hardware security module (HSM) or equivalent cloud Key Management Service (KMS) with dual-control and split-knowledge policy
+  - Must rotate KEK every 90 days and re-encrypt user data keys accordingly
+  - Must implement dual-control for KEK access in cloud KMS
+  - Must log all key management events to immutable audit trail per compliance requirements
+  - Must support pseudonymisation in audit trails and logs (hashed user IDs)
+  - Must allow GDPR right-to-erasure mapping to secure delete user keys and token ciphertexts, with evidence in audit trail.
+- Files / Modules Affected:
+  - `@ccef/security/token-storage.ts` (will implement AES-256-GCM encrypt/decrypt per user, IV generation, zeroisation)
+  - `@ccef/security/key-management.ts` (performs KEK derivation, user data key derivation, rotation, dual-control interface)
+  - `ccef-infra/kms/` Terraform/ARM templates for cloud KMS/HSM resources
+  - `product/requirements/NFR-CCEF-001.md` references this ADR to confirm conformance
+- Validation Method:
+  - Unit test coverage for AES-256-GCM with GCM tag validation and known-answer vectors
+  - Integration smoke-test: rotate KEK in staging, verify re-encryption and audit trail entry
+  - Penetration test: verify absence of plaintext tokens anywhere (logs, memory dumps) with signed report
+  - Security review: sign-off by Security Specialist confirming dual-control, audit logging, zeroisation techniques, constant-time operations, and migration plan from dev/test to prod KMS/HSM
+  - Compliance review: attestation confirming alignment with NIST SP 800-57 and OWASP Key Management practices and GDPR article 32 security of processing.

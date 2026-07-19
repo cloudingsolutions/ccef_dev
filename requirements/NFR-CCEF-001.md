@@ -62,16 +62,14 @@ SSO authentication tokens (particularly access tokens and refresh tokens, if use
 - Must implement appropriate CORS (Cross-Origin Resource Sharing) policy to restrict web API access to authorized origins only
 
 ## Validation Method
-- Automated test: Unit tests for encryption/decryption functions with known answer tests
-- Automated test: Integration tests verifying token flow through encryption storage and retrieval
-- Automated test: Property-based testing for encryption implementation robustness
-- Manual QA: Penetration testing focused on token storage discovery and extraction
-- Security review: Validation of encryption implementation, key management, and resistance to cryptographic attacks
-- Architecture review: Confirmation of proper separation between token handling and business logic
-- Compliance review: Verification of alignment with NIST SP 800-63B and ISO/IEC 24760 for token protection
-- Code review: Inspection of source code for plaintext token storage, logging, or insecure key handling
-- Memory analysis: Verification that tokens are not present in plaintext in memory dumps or swap space
-- Reference: FIPS 140-2/3 validation for cryptographic modules (if using validated implementations)
+- Automated test: Unit tests for AES-256-GCM encryption/decryption with known-answer tests (FIPS-equivalent vectors)
+- Automated test: Integration tests demonstrating end-to-end token flow through encryption storage and retrieval with tamper detection (GCM tag validation)
+- Manual QA: Penetration test of token storage pathways to verify absence of plaintext tokens in logs and memory dumps
+- Security review: Evidence file signed-off on 2026-07-XX by security-specialist confirming encryption implementation, key management, dual-control, and attack resistance per NIST SP 800-57 and OWASP Key Management guidelines
+- Architecture review: Documentation confirming constant-time comparisons, unique IVs per encryption, zeroisation of plaintext buffers, and isolation of cryptographic keys
+- Compliance review: Signed attestation confirming GDPR-compliant pseudonymisation of user identifiers and right-to-erasure mapping to secure deletion of keys and ciphertexts
+- Code reviews: Inspection records demonstrating no plaintext tokens in logs, no insecure key handling, and adherence to constant-time token value comparisons
+
 
 ## References
 Approved artifacts this requirement should be interpreted with.
@@ -84,6 +82,7 @@ Approved artifacts this requirement should be interpreted with.
   - NFR-CCEF-003 (Rate Limiting and Abuse Prevention)
 - ADRs:
   - ADR-0001 (Modular Monolith with Clear Boundaries Approach)
+  - ADR-0003
 - API / Data Contracts:
   - Internal token storage service interface
   - Encryption key management service API
