@@ -1,82 +1,187 @@
 # Requirement
 
 - Requirement ID: NFR-CCEF-008
-- Title: Accessibility Support for Language Preferences
+- Title: WCAG 2.2 AA General Accessibility and Usability
 - Requirement Type: non-functional
 - Product Slice IDs: PS-CCEF-001
 - Lifecycle State: Approved
 
 ## Requirement Statement
-The system shall ensure that language preference changes are accessible to users with disabilities, including proper announcement of language changes for screen reader users and compliance with WCAG 2.1 language-related success criteria.
+
+The system shall conform to the Web Content Accessibility Guidelines (WCAG) 2.2 at the AA level across all user-facing pages, views, modals, controls, flows, and API-driven UIs exposed to end-users and operators, ensuring that persons with disabilities can perceive, operate, understand, and navigate the experiences.
 
 ## Rationale
-Language changes can be disorienting for users with cognitive disabilities or vision impairments if not properly announced. Ensuring that language preference changes are accessible supports inclusive design and compliance with accessibility standards. Proper announcement of language changes helps screen reader users understand when the language of the content has changed, allowing them to adjust their speech synthesis settings accordingly.
+
+WCAG 2.2 AA provides an internationally recognized baseline for accessible design across disabilities—visual, auditory, motor, cognitive, speech, and situational—and aligns with EU/EN 301 549 and other regulatory references for public-facing software. Adopting WCAG 2.2 AA as a cross-cutting, system-wide non-functional requirement prevents implementation gaps that isolate users or create audit exposure when the product is offered to a regulated market. Language preference handling becomes one element of this comprehensive accessibility posture rather than its exclusive focus.
 
 ## Acceptance Criteria
-- Given a user changes their language preference
-- When the language change occurs
-- Then the system shall trigger appropriate accessibility announcements for screen readers
-- And the announcement shall indicate that the language of the content has changed
-- And the announcement shall specify the new language (English or Swedish)
-- 
-- Given the system is displaying content in English
-- When the user's language preference is set to English
-- Then the system shall set the lang attribute on the html element to "en"
-- 
-- Given the system is displaying content in Swedish
-- When the user's language preference is set to Swedish
-- Then the system shall set the lang attribute on the html element to "sv"
-- 
-- Given the system is implementing language preference functionality
-- When testing for accessibility compliance
-- Then the system shall comply with WCAG 2.1 Success Criterion 3.1.1 (Language of Page)
-- And the system shall comply with WCAG 2.1 Success Criterion 3.1.2 (Language of Parts)
+
+- Given any user-facing interface rendered for an end-user
+- When a page, view, modal, or interactive component loads or changes state
+- Then the rendered UI shall conform to WCAG 2.2 AA criteria per the latest published normative document at final release
+- And any UI state triggered by user action shall likewise conform (e.g., navigation, error messages, toasts)
+
+Conformance detail (non-exhaustive):
+- 2.1.1 Keyboard (all functionality available via keyboard)
+- 2.1.2 No Keyboard Trap
+- 2.2.2 Pause, Stop, Hide (animations, movements, time limits)
+- 2.3.1 Three Flashes or Below Threshold
+- 2.4.1 Bypass Blocks
+- 2.4.3 Focus Order
+- 2.4.7 Focus Visible
+- 2.5.1 Pointer Gestures
+- 2.5.2 Pointer Cancellation
+- 2.5.3 Label in Name
+- 2.5.4 Motion Actuation
+- 3.1.1 Language of Page
+- 3.1.2 Language of Parts
+- 3.2.1 On Focus
+- 3.2.2 On Input
+- 3.3.1 Error Identification
+- 3.3.2 Labels or Instructions
+- 3.3.3 Error Suggestion
+- 3.3.4 Error Prevention (Legal, Financial, Data)
+- 4.1.2 Name, Role, Value
+- 4.1.3 Status Messages
+
+- Given a language preference change action
+- When the user switches UI language
+- Then the system shall announce the language change via ARIA live region to screen readers
+- And the html element’s lang attribute shall reflect the new language (e.g., en, sv)
+- And the announcement shall state the new language clearly (e.g., "Interface language changed: English")
+
+- Given screen-reader and keyboard-only users interacting with the UI
+- When they navigate forms and controls
+- Then interactive labels, roles, states, and instructions shall be programmatically exposed and navigable via assistive technologies without failure
+
+- Given color is used to convey information
+- When presented to users
+- Then an additional visual or text cue shall also be provided to remove ambiguity
+
+- Given user interface components receiving keyboard focus
+- When keyboard users tab through the interface
+- Then focus indicators shall be clearly visible per WCAG 2.2 AA sufficient techniques
+
+- Given time-based media or animations that would distract or convey information
+- When initiated by the system
+- Then a mechanism shall be provided to pause, stop, or hide them unless they are essential
+
+- Given any form that collects user input
+- When submitted
+- Then inline or summary-level error messaging shall identify erroneous fields and describe how to correct them
+- And error suggestions or automatic corrections shall be provided where known
+
+- Given status messages generated by the system
+- When presented to assistive technologies
+- Then they shall be marked up so screen readers announce them without requiring user interaction
+
+- Given the system communicates success confirmation, warnings, errors, or status updates
+- When rendered as non-modal transient messages or banners
+- Then they shall persist long enough for users with cognitive disabilities to notice and act, and be dismissible unless they indicate an error that requires user action
+
+- Given the system includes motion or animation that conveys meaningful information
+- When enabled by default
+- Then a system or user setting shall be available to reduce or disable motion
+
+- Given all pages and state changes that update user interface elements or content
+- When the update is not a full page reload
+- Then ARIA live regions shall be used so screen readers announce changes automatically and at an appropriate politeness level
+
+- Given data tables and layouts
+- When presented
+- Then headers and data cells shall be semantically associated so assistive technologies can present them as a coherent grid
+
+- Given drag-and-drop or complex pointer interactions
+- When the user is not litigating disabilities requiring touch or alternative input
+- Then equivalent functionality shall be provided via keyboard-only and pointer-independent input
+
+- Given any critical operation that modifies data or system state and cannot be easily reversed
+- When presented to a keyboard user
+- Then Undo, confirmation dialogs, or confirmations shall be available
 
 ## Explicit Exclusions
-- Support for languages other than English and Swedish
-- Automatic language detection based on IP address or geolocation
-- Right-to-left (RTL) language layout support
-- Translation of user-generated content
-- Language-based content adaptation beyond interface translation
+
+- Conformance to AAA success criteria beyond the AA threshold unless superseded by regulation or contractual obligation already listed in References
+- Funding or resourcing for specialized assistive technologies or environments outside automated checks and representative user testing
+- Fully manual accessibility audits retained indefinitely for every release; reliance is placed on automated scanning complemented by representative user testing as necessary
+- Third-party embedded widgets or integrations (maps, analytics, social embeds) unless documented contractual obligations specifically bring them into scope for WCAG 2.2 AA
+- User-generated content or imported iFrames that are outside the direct control of the application unless explicitly scoped within implementation work
 
 ## Constraints
-- Must use standard HTML lang attribute to indicate language of content
-- Must trigger language change announcements through ARIA live regions or equivalent mechanisms
-- Must ensure announcements are timely and do not interfere with other important announcements
-- Must validate accessibility with screen reader testing (NVDA, JAWS, VoiceOver)
-- Must not rely solely on color changes to indicate language changes
+
+- Must validate WCAG 2.2 AA conformance using a combination of automated scanning (axe-core, Pa11y), browser-assisted tools, and representative manual tests with assistive technologies (NVDA, JAWS, VoiceOver, TalkBack, Narrator)
+- Must integrate an accessibility linter or static analysis plugin in CI to catch regressions against the criteria above
+- Must include accessibility extensions in Cypress/Playwright E2E test suites to assert semantic structure, focus order, ARIA roles, status messages, and language attributes
+- Must treat accessibility as a blocking quality gate in the release pipeline—no artifact can mark "accessibility tests skipped" without explicit sign-off
+- Must provide a WCAG 2.2 AA conformance statement and VPAT for procurement and regulatory filings, refreshed at each major release
+- Must ensure all external color palettes meet WCAG 2.1 contrast ratios minimum 4.5:1 for text and 3:1 for large text/ui controls unless stricter ratios apply
+- Must implement design tokens and component libraries in a manner that prevents contrast regression across theme variants
+- Must maintain a central accessibility audit dashboard capturing open issues, triage ownership, and remediation dates
+- Must perform accessibility discovery sessions with users who have various disabilities at least once per major release cycle
+- Must document any deviations from WCAG 2.2 AA with controls, monitoring, and mitigation strategies for prolonged lack of conformance
+- Must ensure keyboard-only and screen-reader use cases are part of the definition-of-done for every user story
+
+Scope covers but is not limited to: account creation, sign-in, password change, language preference, dashboard, forecasting visualizations, alerting configuration, settings, profile management, CSV import/export workflows, mobile-responsive views, email content, documentation sites (if served from same domain).
 
 ## Validation Method
-- Automated test: Unit tests for language attribute setting
-- Automated test: Integration tests for language change announcement triggering
-- Manual QA: Accessibility testing with screen readers
-- Accessibility audit: Validation of WCAG 2.1 language-related success criteria
-- User acceptance testing: Validation with users who rely on screen readers
+
+- Automated test: CI pipeline runs axe-core/Deque against the application at each PR and merge-to-main, blocking any regression increase greater than zero
+- Automated test: Storybook a11y plugin checks published components nightly
+- Automated test: Pa11y regression suite triggered on staging; diff reported per build
+- Automated test: Cypress a11y plugin asserts focus order, semantic HTML, ARIA roles, and status messages
+- Automated test: Custom Pa11y script validates critical pages and flows; exits non-zero on failures
+- Manual QA: WCAG 2.2 AA checklist walkthrough by QA accessibility specialists at least once per PI
+- Manual QA: Keyboard-only traversal of every major user flow (SR scenarios)
+- Manual QA: Screen reader testing with NVDA, JAWS, VoiceOver for representative screens and flows
+- Manual QA: High-contrast theme walkthrough and color-blindness simulator checks
+- Manual QA: User acceptance testing sessions with users with disabilities for feedback and issue triage once per release at minimum
+- Security review: Accessibility of security controls (e.g., CAPTCHA alternatives, consent prompts)
+- Architecture review: Confirmation that accessibility concerns are addressed in design reviews, epics, and stories in-band with feature delivery
+- Compliance review: Validation of VPAT completeness against WCAG 2.2 AA during each major release including EU/EN 301 549 statements
+- Performance & compatibility: Verify that accessibility features and ARIA announcements do not introduce excessive runtime latency or regress Core Web Vitals scoring
 
 ## References
+
 Approved artifacts this requirement should be interpreted with.
 
 - Related Requirements, non-blocking:
+  - NFR-CCEF-009 (Legal Consent Record Integrity and Security)
+  - NFR-CCEF-003 (Observability and Monitoring)
+  - NFR-CCEF-007 (Secret Management and Key Rotation)
   - FR-CCEF-022 (Language Preference Detection and Default Selection)
   - FR-CCEF-023 (Language Preference Storage and Application)
 - ADRs:
   - ADR-0001 (Modular Monolith with Clear Boundaries Approach)
+  - ADR-0002 (GDPR-Compliant Data Handling Approach)
 - API / Data Contracts:
-  - Accessibility API Specification
+  - ccef-ui-ux/component-library tokens and documentation
+  - ccef-infra/accessibility-audit-config.yaml
 - Policies / Regulations:
-  - WCAG 2.1 Success Criterion 3.1.1 (Language of Page)
-  - WCAG 2.1 Success Criterion 3.1.2 (Language of Parts)
-  - EN 301 549 (Accessibility requirements for ICT products and services)
+  - WCAG 2.2 at AA level (https://www.w3.org/WAI/WCAG22/quickref/)
+  - EN 301 549 V3.2.1 (2024-04) – Accessibility requirements for ICT products and services
+  - Section 508 (US) where applicable to federal use cases
+  - BITV 2.0 (Germany)
+  - harmonized EU standards for accessibility of products and services
 - Design Artifacts:
-  - ccef-ui-ux/accessibility-language.html (Accessibility patterns for language changes)
+  - ccef-ui-ux/accessibility-guide.md
+  - ccef-ui-ux/component-library accessibility patterns
+  - ccef-ui-ux/storybook accessibility stories
+  - ccef-ui-ux/color-tokens-and-contrast.md
+- Other:
+  - WAI-ARIA 1.2 specification
+  - Inclusive Components ( Heydon Pickering ), A List Apart
+  - WebAIM articles and checklists
+  - Deque University accessibility resources
+  - Government Digital Service (UK) accessibility guidance
 
 ## Traceability
+
 Planning objects this requirement supports or constrains.
+
 
 - Product Slices:
   - PS-CCEF-001
 - Use Cases:
-  - UC-CCEF-005
 
 Traceability rules:
 - Every Requirement not marked Out of Scope must trace to at least one Product Slice.
