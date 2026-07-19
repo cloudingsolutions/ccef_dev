@@ -41,4 +41,10 @@ User successfully updates their account information and receives confirmation of
 - Language preferences beyond English and Swedish
 
 ## Linked Requirement IDs
-FR-CCEF-024, FR-CCEF-025, FR-CCEF-026, FR-CCEF-027, FR-CCEF-028, FR-CCEF-029, FR-CCEF-030
+- FR-CCEF-024
+- FR-CCEF-025
+- FR-CCEF-026
+- FR-CCEF-027
+- FR-CCEF-028
+- FR-CCEF-029
+- FR-CCEF-030

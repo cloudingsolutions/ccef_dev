@@ -37,16 +37,16 @@ User successfully creates an account using the one-time code and is authenticate
 - Code reuse prevention (each code can only be used once)
 
 ## Linked Requirement IDs
-FR-CCEF-003
-FR-CCEF-006
-FR-CCEF-007
-FR-CCEF-009
-FR-CCEF-011
-FR-CCEF-012
-FR-CCEF-015
-NFR-CCEF-001
-NFR-CCEF-002
-NFR-CCEF-003
-NFR-CCEF-004
-NFR-CCEF-005
-NFR-CCEF-006
+- FR-CCEF-003
+- FR-CCEF-006
+- FR-CCEF-007
+- FR-CCEF-009
+- FR-CCEF-011
+- FR-CCEF-012
+- FR-CCEF-015
+- NFR-CCEF-001
+- NFR-CCEF-002
+- NFR-CCEF-003
+- NFR-CCEF-004
+- NFR-CCEF-005
+- NFR-CCEF-006

@@ -44,4 +44,4 @@ User's data residency region is established and recorded, either through system 
 - Residency confirmation via government ID or documentation
 
 ## Linked Requirement IDs
-FR-CCEF-032
+- FR-CCEF-032

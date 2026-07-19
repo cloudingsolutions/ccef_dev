@@ -37,22 +37,22 @@ User successfully creates an account, verifies their email address, and is authe
 - Language preference setting during initial registration (handled in post-onboarding)
 
 ## Linked Requirement IDs
-FR-CCEF-005
-FR-CCEF-006
-FR-CCEF-007
-FR-CCEF-008
-FR-CCEF-009
-FR-CCEF-010
-FR-CCEF-011
-FR-CCEF-012
-FR-CCEF-013
-FR-CCEF-014
-FR-CCEF-015
-FR-CCEF-016
-FR-CCEF-017
-NFR-CCEF-001
-NFR-CCEF-002
-NFR-CCEF-003
-NFR-CCEF-004
-NFR-CCEF-005
-NFR-CCEF-006
+- FR-CCEF-005
+- FR-CCEF-006
+- FR-CCEF-007
+- FR-CCEF-008
+- FR-CCEF-009
+- FR-CCEF-010
+- FR-CCEF-011
+- FR-CCEF-012
+- FR-CCEF-013
+- FR-CCEF-014
+- FR-CCEF-015
+- FR-CCEF-016
+- FR-CCEF-017
+- NFR-CCEF-001
+- NFR-CCEF-002
+- NFR-CCEF-003
+- NFR-CCEF-004
+- NFR-CCEF-005
+- NFR-CCEF-006

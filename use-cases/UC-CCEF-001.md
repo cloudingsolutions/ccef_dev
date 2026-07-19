@@ -37,17 +37,17 @@ User successfully creates an account and is authenticated into the system, with 
 - Language preference setting during initial SSO signup (handled in post-onboarding)
 
 ## Linked Requirement IDs
-FR-CCEF-001
-FR-CCEF-002
-FR-CCEF-003
-FR-CCEF-004
-FR-CCEF-005
-FR-CCEF-006
-FR-CCEF-007
-NFR-CCEF-001
-NFR-CCEF-002
-NFR-CCEF-003
-NFR-CCEF-004
-NFR-CCEF-005
-NFR-CCEF-006
-NFR-CCEF-007
+- FR-CCEF-001
+- FR-CCEF-002
+- FR-CCEF-003
+- FR-CCEF-004
+- FR-CCEF-005
+- FR-CCEF-006
+- FR-CCEF-007
+- NFR-CCEF-001
+- NFR-CCEF-002
+- NFR-CCEF-003
+- NFR-CCEF-004
+- NFR-CCEF-005
+- NFR-CCEF-006
+- NFR-CCEF-007
