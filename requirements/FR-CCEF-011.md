@@ -3,8 +3,8 @@
 - Requirement ID: FR-CCEF-011
 - Title: Send Verification Email During Account Creation
 - Requirement Type: functional
-- Product Slice IDs: PS-CCEF-001
-- Lifecycle State: Approved
+- Product Slice IDs:
+- Lifecycle State: Out of Scope
 
 ## Requirement Statement
 The system shall send a verification email to the provided email address during account creation to confirm email address ownership and validity.
@@ -109,7 +109,7 @@ Approved artifacts this requirement should be interpreted with.
   - RFC 5321 (Simple Mail Transfer Protocol)
   - RFC 5322 (Internet Message Format)
 - Design Artifacts:
-  - ccef-ui-ux/email-verification.html (Email verification template)
+  - ccef-ui-ux/prototype/index.html (Email verification template)
   - ccef-ui-ux/prototype/index.html (Account creation flow showing email verification)
 - Other:
   - Email service provider documentation and best practices

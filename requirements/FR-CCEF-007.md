@@ -103,8 +103,7 @@ Approved artifacts this requirement should be interpreted with.
   - GDPR Article 20 (Right to data portability)
   - GDPR Article 21 (Right to object)
 - Design Artifacts:
-  - ccef-ui-ux/data-subject-rights.html (Data subject rights interface)
-  - ccef-api/dsar-endpoints.yaml (Data subject rights API specifications)
+  - ccef-ui-ux/prototype/index.html (Data subject rights interface)
 
 ## Traceability
 Planning objects this requirement supports or constrains.

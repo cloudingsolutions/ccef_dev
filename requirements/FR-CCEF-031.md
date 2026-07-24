@@ -91,8 +91,8 @@ Approved artifacts this requirement should be interpreted with.
   - GDPR Article 13 (Information to be provided where personal data are collected)
   - ePrivacy Directive 2002/58/EC (Privacy and electronic communications)
 - Design Artifacts:
-  - ccef-ui-ux/terms-privacy-acceptance.html (Terms and conditions acceptance interface)
-  - ccef-api/legal-consent-endpoints.yaml (Legal consent API specifications)
+  - ccef-ui-ux/prototype/index.html (Terms and conditions acceptance interface)
+  - ccef-ui-ux/prototype/index.html (Legal consent API specifications)
 
 ## Traceability
 Planning objects this requirement supports or constrains.

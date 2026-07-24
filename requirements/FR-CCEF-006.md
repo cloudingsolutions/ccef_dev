@@ -77,8 +77,7 @@ Approved artifacts this requirement should be interpreted with.
   - GDPR Article 13 (Information to be provided where personal data are collected)
   - GDPR Article 14 (Information to be provided where personal data have not been obtained from data subject)
 - Design Artifacts:
-  - ccef-ui-ux/privacy-notice.html (Privacy notice implementation)
-  - ccef-ui-ux/consent-management.html (Consent management interface)
+  - ccef-ui-ux/prototype/index.html (Privacy notice implementation)
 
 ## Traceability
 Planning objects this requirement supports or constrains.

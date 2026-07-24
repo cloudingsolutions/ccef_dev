@@ -41,8 +41,6 @@ User successfully creates an account using the one-time code and is authenticate
 - FR-CCEF-006
 - FR-CCEF-007
 - FR-CCEF-009
-- FR-CCEF-011
-- FR-CCEF-012
 - FR-CCEF-015
 - NFR-CCEF-001
 - NFR-CCEF-002

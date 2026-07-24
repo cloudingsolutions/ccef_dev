@@ -104,9 +104,7 @@ Approved artifacts this requirement should be interpreted with.
   - ISO/IEC 27001: Information security management systems
   - SOC 2 Type II: Security, Availability, Processing Integrity, Confidentiality
 - Design Artifacts:
-  - ccef-infra/secret-management.yaml (Secret management configuration)
-  - ccef-infra/secret-rotation-policies.yaml (Secret rotation schedules and procedures)
-  - ccef-test/secret-management-tests.yaml (Secret management test specifications)
+
 
 ## Traceability
 Planning objects this requirement supports or constrains.

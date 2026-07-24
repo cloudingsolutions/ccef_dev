@@ -95,9 +95,7 @@ Approved artifacts this requirement should be interpreted with.
   - SOC 2 Type II: Security, Availability, Processing Integrity, Confidentiality
   - NIST SP 800-57: Recommendation for Key Management
 - Design Artifacts:
-  - ccef-infra/legal-consent-storage.yaml (Legal consent storage configuration)
-  - ccef-infra/consent-record-retention-policies.yaml (Consent record retention schedules)
-  - ccef-test/legal-consent-security-tests.yaml (Legal consent security test specifications)
+
 
 ## Traceability
 Planning objects this requirement supports or constrains.

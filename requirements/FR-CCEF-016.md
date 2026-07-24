@@ -165,7 +165,7 @@ Approved artifacts this requirement should be interpreted with.
   - ISO/IEC 40500:2012 Web Content Accessibility Guidelines
   - EN 301 549: Accessibility requirements for ICT products and services
 - Design Artifacts:
-  - ccef-ui-ux/feedback-system.html (Feedback mechanism implementation)
+  - ccef-ui-ux/prototype/index.html (Feedback mechanism implementation)
   - ccef-ui-ux/prototype/index.html (Account creation flow showing feedback mechanisms)
 - Other:
   - User experience and feedback best practices and guidelines

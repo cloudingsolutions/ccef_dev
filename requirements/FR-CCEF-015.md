@@ -153,7 +153,7 @@ Approved artifacts this requirement should be interpreted with.
   - WCAG 2.2: Web Content Accessibility Guidelines
   - ISO/IEC 27001: Information security management systems
 - Design Artifacts:
-  - ccef-ui-ux/onboarding-defaults.html (Onboarding defaults implementation)
+  - ccef-ui-ux/prototype/index.html (Onboarding defaults implementation)
   - ccef-ui-ux/prototype/index.html (Account creation flow showing onboarding defaults)
 - Other:
   - GDPR compliance guidelines and best practices

@@ -122,7 +122,7 @@ Approved artifacts this requirement should be interpreted with.
   - RFC 6265: HTTP State Management Mechanism (Cookies)
   - Web Content Accessibility Guidelines (WCAG) 2.2
 - Design Artifacts:
-  - ccef-ui-ux/onboarding-flow.html (Onboarding flow implementation)
+  - ccef-ui-ux/prototype/index.html (Onboarding flow implementation)
   - ccef-ui-ux/prototype/index.html (Account creation flow showing email verification and redirect)
 - Other:
   - Web redirect best practices and guidelines from Mozilla, Google, etc.

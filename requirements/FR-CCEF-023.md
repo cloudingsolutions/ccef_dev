@@ -81,9 +81,7 @@ Approved artifacts this requirement should be interpreted with.
 - Policies / Regulations:
   - WCAG 2.1 Success Criterion 3.1.2 (Language of Parts)
 - Design Artifacts:
-  - ccef-ui-ux/language-settings.html (Language settings in account management)
-  - ccef-ui-ux/i18n-en.json (English translation file)
-  - ccef-ui-ux/i18n-sv.json (Swedish translation file)
+  - ccef-ui-ux/prototype/index.html (Language settings in account management)
 
 ## Traceability
 Planning objects this requirement supports or constrains.

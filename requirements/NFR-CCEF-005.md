@@ -98,8 +98,6 @@ Approved artifacts this requirement should be interpreted with.
   - GDPR Chapter V (Transfers of personal data to third countries)
   - GDPR Article 28 (Processor)
 - Design Artifacts:
-  - ccef-infra/storage-residency.yaml (Data storage residency configuration)
-  - ccef-infra/retention-policies.yaml (Data retention and deletion policies)
 
 ## Traceability
 Planning objects this requirement supports or constrains.

@@ -163,10 +163,7 @@ Approved artifacts this requirement should be interpreted with.
   - BITV 2.0 (Germany)
   - harmonized EU standards for accessibility of products and services
 - Design Artifacts:
-  - ccef-ui-ux/accessibility-guide.md
-  - ccef-ui-ux/component-library accessibility patterns
-  - ccef-ui-ux/storybook accessibility stories
-  - ccef-ui-ux/color-tokens-and-contrast.md
+
 - Other:
   - WAI-ARIA 1.2 specification
   - Inclusive Components ( Heydon Pickering ), A List Apart

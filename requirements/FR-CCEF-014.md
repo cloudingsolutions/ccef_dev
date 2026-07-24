@@ -130,7 +130,7 @@ Approved artifacts this requirement should be interpreted with.
   - OWASP Authentication Cheat Sheet
   - RFC 6265: HTTP State Management Mechanism (Cookies)
 - Design Artifacts:
-  - ccef-ui-ux/login.html (Login page implementation)
+  - ccef-ui-ux/prototype/index.html (Login page implementation)
   - ccef-ui-ux/prototype/index.html (Account creation flow showing email verification and login)
 - Other:
   - Authentication best practices and guidelines

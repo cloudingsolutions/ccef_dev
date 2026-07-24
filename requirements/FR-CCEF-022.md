@@ -52,7 +52,7 @@ Approved artifacts this requirement should be interpreted with.
 - Policies / Regulations:
   - WCAG 2.1 Success Criterion 3.1.1 (Language of Page)
 - Design Artifacts:
-  - ccef-ui-ux/language-selector.html (Language selector component)
+  - ccef-ui-ux/prototype/index.html (Language selector component)
 
 ## Traceability
 Planning objects this requirement supports or constrains.

@@ -138,11 +138,7 @@ Approved artifacts this requirement should be interpreted with.
   - ISO/IEC 25010: Systems and software quality requirements and evaluation
   - ISTQB Foundation Level: Software Testing Certification
 - Design Artifacts:
-  - ccef-test/testability-framework.yaml (Testability framework configuration)
-  - ccef-test/negative-scenarios.yaml (Negative scenario test definitions)
-  - ccef-test/audit-log-verification.yaml (Audit log verification procedures)
-  - ccef-test/concurrency-tests.yaml (Concurrency test specifications)
-  - ccef-test/performance-measurement.yaml (Performance measurement methodologies)
+
 
 ## Traceability
 Planning objects this requirement supports or constrains.

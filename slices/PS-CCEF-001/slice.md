@@ -23,7 +23,7 @@ All data handling shall comply with the Data Handling Policy documented in `prod
 
 Establish the foundational user access and account management capabilities for the Cloud Cost Estimator and Forecaster. This slice focuses exclusively on secure user registration, authentication, basic account configuration, and initial setup flows that enable users to access the system.
 
-Users can create accounts via Google/Apple SSO, email+password or email+OTP, verify phone numbers for SMS consent, configure language preferences, set data residency (with Europe as minimum), and manage basic account settings - all while establishing the GDPR-compliant foundation for future slices.
+Users can create accounts via Google/Apple SSO or email+OTP, verify phone numbers for SMS consent, configure language preferences, set data residency (with Europe as minimum), and manage basic account settings - all while establishing the GDPR-compliant foundation for future slices.
 
 ## Success Criteria
 
@@ -34,7 +34,7 @@ This slice is successful when a user can:
 4. Select and manage English or Swedish as the default language
 5. Have device/OS language detected and pre-selected during onboarding; user can confirm or override; changeable post-onboarding in account settings
 6. Authenticate and access the product as a registered user
-7. Update name, password, default language, and basic contact preferences
+7. Update name, default language, and basic contact preferences
 8. Have system infer residency from IP and/or phone number with Europe as minimum supported region
 9. Select region where legally permitted (no silent assignment to arbitrary region)
 10. View clear terms & conditions and privacy policy during onboarding that must be accepted
@@ -90,7 +90,7 @@ What is explicitly excluded from the slice and must not be planned, implemented,
 - Invoice reconciliation or billing system replacement.
 - Alert delivery channels other than in-app/dashboard notifications and SMS, unless separately defined.
 - UC-CCEF-002 is explicitly excluded from this slice; no requirement, milestone, tasks, work item, test or regression should be derived from it.
-- FR-CCEF-008, FR-CCEF-010,  FR-CCEF-013, FR-CCEF-014, FR-CCEF-016, FR-CCEF-017 are explicitly excluded from this slice; no milestone, tasks, work item, test or regression should be derived from them.
+- FR-CCEF-008, FR-CCEF-010, FR-CCEF-011, FR-CCEF-012, FR-CCEF-013, FR-CCEF-014, FR-CCEF-016, FR-CCEF-017 are explicitly excluded from this slice; no milestone, tasks, work item, test or regression should be derived from them.
 
 ## Included Use Cases
 UC-CCEF-001, UC-CCEF-003, UC-CCEF-004, UC-CCEF-005, UC-CCEF-006, UC-CCEF-007, UC-CCEF-008
@@ -104,8 +104,6 @@ FR-CCEF-005
 FR-CCEF-006
 FR-CCEF-007
 FR-CCEF-009
-FR-CCEF-011
-FR-CCEF-012
 FR-CCEF-015
 FR-CCEF-018
 FR-CCEF-019

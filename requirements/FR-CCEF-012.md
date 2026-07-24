@@ -3,8 +3,8 @@
 - Requirement ID: FR-CCEF-012
 - Title: Process Email Verification Link
 - Requirement Type: functional
-- Product Slice IDs: PS-CCEF-001
-- Lifecycle State: Approved
+- Product Slice IDs:
+- Lifecycle State: Out of Scope
 
 ## Requirement Statement
 The system shall process email verification links clicked by users to confirm email address ownership and activate pending accounts.
@@ -114,7 +114,7 @@ Approved artifacts this requirement should be interpreted with.
   - NIST SP 800-63B: Digital Identity Guidelines (Authentication and Lifecycle Management)
   - RFC 6265: HTTP State Management Mechanism (Cookies)
 - Design Artifacts:
-  - ccef-ui-ux/email-verification.html (Email verification template)
+  - ccef-ui-ux/prototype/index.html(Email verification template)
   - ccef-ui-ux/prototype/index.html (Account creation flow showing email verification)
 - Other:
   - Email verification best practices and guidelines
