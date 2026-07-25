@@ -28,12 +28,15 @@ User successfully creates an account using the one-time code and is authenticate
 8. System enforces rate limiting on code generation to prevent abuse
 9. Account is created with compliant onboarding defaults applied
 10. User receives clear feedback about code expiration and resend options
+11. If the code is expired, invalid, malformed, or already used, the system shows a user-facing error message and recovery action
+12. If code delivery or submission fails because of network or email delivery issues, the system shows a user-facing error message and retry path
+13. If resend or validation attempts are temporarily rate limited, the system shows a user-facing retry-after message without revealing account existence
 
 ## Explicit Exclusions
 - Password creation or management for this authentication method
 - Social Sign-On options (Google/Apple) for this flow
-- Phone number collection during initial registration (handled in separate flow)
-- Language preference setting during initial registration (handled in post-onboarding)
+- Requiring phone number collection to complete initial email-code registration; optional post-account phone setup is covered by UC-CCEF-004
+- Requiring language preference selection to complete initial email-code registration; language selection during onboarding and settings is covered by UC-CCEF-005 and UC-CCEF-006
 - Code reuse prevention (each code can only be used once)
 
 ## Linked Requirement IDs

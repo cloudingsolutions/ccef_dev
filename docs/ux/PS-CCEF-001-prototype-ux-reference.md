@@ -76,8 +76,8 @@ The following prototype areas are relevant to User Access and Account Management
 - Explicit checkbox gate before enabling the Create account or Agree and continue action.
 - Email one-time code entry, resend action, and use-different-email action.
 - Phone number collection, SMS verification code entry, resend action, use-different-number action, and skip-for-now action.
-- Language selection during account creation, including device-detected default language messaging.
-- Data residency display during account creation, including detected EU Stockholm default and user-initiated region change.
+- Language selection during onboarding, including device-detected default language messaging.
+- Data residency display during onboarding, including detected EU Stockholm default and user-initiated region change.
 - Account settings for name, work email, sign-in method, mobile number, language, data residency, and contact preferences.
 - Privacy and data settings for region, language, consent toggles, data export request, and account deletion entry point.
 - Notification settings for alert types, SMS contacts, contact verification state, and default snooze duration.
@@ -245,9 +245,9 @@ Implementation derived from this prototype must satisfy NFR-CCEF-008. The protot
 
 ## Product Gaps To Resolve Before Implementation
 
-- The prototype does not model OAuth provider denial, provider callback failure, network failure, expired/incorrect OTP, rate limiting, account conflict, or unsupported residency errors.
-- The prototype places phone collection before first-run setup, while some current product artifacts describe phone collection as separate from initial account creation.
-- The prototype collects language during account creation, while some current product artifacts place language preference in post-onboarding.
+- The prototype is a happy-path reference; approved use cases and requirements define provider denial, provider callback failure, network failure, expired/incorrect OTP, rate limiting, account conflict, and unsupported residency error behavior.
+- Phone collection is optional after account creation and before first-run setup; users can skip it and complete SMS setup later from account settings.
+- Language selection is part of onboarding after account creation and remains changeable later in account settings.
 - The prototype settings list languages beyond the currently approved English and Swedish scope.
 - The prototype uses Clouding brand copy, while the product artifacts identify the product as CCEF and Cloud Cost Estimator and Forecaster.
 - The prototype includes account deletion and data export entry points in settings; scope must confirm whether these are PS-CCEF-001 commitments or future compliance/account-management items.

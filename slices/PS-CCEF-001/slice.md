@@ -35,14 +35,14 @@ This slice is successful when a user can:
 5. Have device/OS language detected and pre-selected during onboarding; user can confirm or override; changeable post-onboarding in account settings
 6. Authenticate and access the product as a registered user
 7. Update name, default language, and basic contact preferences
-8. Have system infer residency from IP and/or phone number with Europe as minimum supported region
+8. Have system infer residency from IP with Europe as minimum supported region
 9. Select region where legally permitted (no silent assignment to arbitrary region)
 10. View clear terms & conditions and privacy policy during onboarding that must be accepted
 11. Have explicit consent captured before SMS alerts are sent, with consent stored and auditable
 
 ## Constraints
 
-The product must determine an initial data residency region during onboarding using IP address and/or phone number. Europe is the minimum supported residency region. Where regulation permits user choice, users may select another supported region. The product must not silently assign users with unsupported/indeterminate residency to arbitrary regions.
+The product must determine an initial data residency region during onboarding using IP address. Europe is the minimum supported residency region. Where regulation permits user choice, users may select another supported region. The product must not silently assign users with unsupported/indeterminate residency to arbitrary regions.
 
 The initial release must meet GDPR as the minimum compliance baseline, including data residency, consent management, and right to access/erasure.
 

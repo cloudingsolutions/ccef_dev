@@ -27,7 +27,7 @@ Phone number verification is a critical security step for enabling SMS alert fun
 - And the system shall provide clear feedback on validation success or failure
 
 ## Explicit Exclusions
-- Phone number collection during initial account creation (handled separately)
+- Requiring phone number collection to complete initial account creation
 - Permanent storage of phone number before verification completion
 - Phone number porting detection or carrier validation
 - International calling restrictions based on country-specific regulations

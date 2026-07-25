@@ -50,13 +50,13 @@ UX Prototype Use: Visual authority for defined screens and states
 | Email one-time code account creation | In scope | UC-CCEF-003; FR-CCEF-003; FR-CCEF-009; FR-CCEF-011; FR-CCEF-012; FR-CCEF-015 |
 | Terms and privacy checkbox gate | In scope | Slice success criteria; FR-CCEF-006; FR-CCEF-031; NFR-CCEF-005; NFR-CCEF-009 |
 | Terms and privacy document modal | In scope as acceptance UX, copy requires legal review | FR-CCEF-006; FR-CCEF-031; product/docs/privacy/data-handling-policy.md |
-| Language selection during signup | In scope if product confirms signup timing | UC-CCEF-006; FR-CCEF-022; FR-CCEF-023; NFR-CCEF-008 |
+| Language selection during onboarding | In scope after account creation and changeable in settings | UC-CCEF-005; UC-CCEF-006; FR-CCEF-022; FR-CCEF-023; NFR-CCEF-008 |
 | Detected language message | In scope | Slice success criteria; FR-CCEF-022; FR-CCEF-023; NFR-CCEF-008 |
-| Data residency notice during signup | In scope | UC-CCEF-008; FR-CCEF-032; ADR-0002; product/docs/privacy/data-handling-policy.md |
+| Data residency notice during onboarding | In scope after account creation | UC-CCEF-008; FR-CCEF-032; ADR-0002; product/docs/privacy/data-handling-policy.md |
 | User-initiated residency change | In scope if legally permitted | UC-CCEF-008; FR-CCEF-032; ADR-0002 |
-| Phone number collection | In scope, but timing conflict must be resolved | UC-CCEF-004; FR-CCEF-018; FR-CCEF-019; FR-CCEF-020; FR-CCEF-021 |
+| Optional phone number collection | In scope after account creation; skippable during onboarding | UC-CCEF-004; FR-CCEF-018; FR-CCEF-019; FR-CCEF-020; FR-CCEF-021 |
 | SMS verification code | In scope | UC-CCEF-004; FR-CCEF-018; FR-CCEF-019; FR-CCEF-021; NFR-CCEF-003 |
-| Skip phone for now | Product decision needed | Slice success criteria; UC-CCEF-004; FR-CCEF-020 |
+| Skip phone for now | In scope; user can continue onboarding without SMS consent | Slice success criteria; UC-CCEF-004; FR-CCEF-020 |
 | Account settings profile tab | In scope for basic account management | UC-CCEF-005; UC-CCEF-006; UC-CCEF-008; FR-CCEF-024 through FR-CCEF-030; FR-CCEF-032 |
 | Privacy and data settings tab | Partly in scope, partly compliance expansion | UC-CCEF-007; UC-CCEF-008; FR-CCEF-031; FR-CCEF-032; NFR-CCEF-005; ADR-0002 |
 | Notification settings tab | In scope only where tied to SMS consent/contact preferences | UC-CCEF-004; FR-CCEF-020; FR-CCEF-021 |
@@ -85,15 +85,13 @@ Use the prototype information in this order:
 
 ### Phone Collection Timing
 
-The prototype places phone collection immediately after account creation and before first-run setup. Current use-case text says phone number collection during initial account creation is excluded or handled separately.
-
-Recommended resolution: decide whether phone collection is part of the required account creation completion path, a skippable post-account step, or a later settings-only action. Then update UC-CCEF-004, FR-CCEF-018 through FR-CCEF-021, and milestone scope accordingly.
+The prototype places optional phone collection immediately after account creation and before first-run setup. Users can skip phone setup and complete SMS setup later from account settings.
 
 ### Language Timing
 
-The prototype collects language during signup and also exposes language in settings. Some artifact text says language preference is handled in post-onboarding.
+Language selection occurs during onboarding after account creation and remains available later in account settings.
 
-Recommended resolution: make device-language detection and default selection part of account creation/onboarding, and make later changes part of account settings. Then align UC-CCEF-006, FR-CCEF-022, FR-CCEF-023, and the slice success criteria.
+Device-language detection and default selection are part of onboarding. Later changes are part of account settings.
 
 ### Supported Languages
 
@@ -121,9 +119,9 @@ Recommended resolution: keep account creation terms/privacy acceptance in PS-CCE
 
 ### Auth Error States
 
-The prototype shows happy-path flows, resend confirmations, validation hints, and disabled consent actions, but does not define failure states for OAuth denial, token callback errors, invalid or expired codes, network timeouts, account conflicts, rate limits, or unsupported residency.
+The prototype shows happy-path flows, resend confirmations, validation hints, and disabled consent actions. Approved use cases and requirements define failure states for OAuth denial, token callback errors, invalid or expired codes, network timeouts, account conflicts, rate limits, and unsupported residency.
 
-Recommended resolution: add explicit user-facing error states to the relevant use cases and requirements before implementation work is generated.
+Implementation work should follow the approved use cases and requirements for those error states rather than treating the prototype as exhaustive.
 
 ## Proposed Product Artifact Updates
 

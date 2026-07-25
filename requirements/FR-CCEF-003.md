@@ -29,9 +29,11 @@ Providing an email one-time code fallback ensures users can access their account
 - And the system shall redirect the user to the post-authentication flow (onboarding or main app) within 2 seconds (±200ms tolerance)
 - And the system shall invalidate the used one-time code immediately after successful validation
 - And the system shall handle expired codes gracefully by requesting a new code (with user feedback)
+- And the system shall handle invalid, malformed, or already-used codes by showing a user-facing error message and allowing another attempt when rate limits permit
 - And the system shall rate-limit code generation to maximum 3 requests per email address per hour
-- And the system shall provide clear feedback when attempting to resend a code too soon
+- And the system shall provide clear user-facing retry-after feedback when attempting to resend a code too soon
 - And the system shall handle email delivery failures by informing the user and allowing retry
+- And the system shall handle network failures during code request or submission by informing the user and preserving entered email/code state where safe
 - And the system shall not reveal whether an email address is registered through timing or error messages
 
 ## Explicit Exclusions

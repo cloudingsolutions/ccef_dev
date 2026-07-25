@@ -7,7 +7,7 @@
 - Lifecycle State: Approved
 
 ## Requirement Statement
-The system shall allow users to confirm or select their data residency region during the onboarding flow, with automatic inference based on IP address and/or phone number, and manual selection as a fallback when inference fails or when users wish to choose an alternative supported region.
+The system shall allow users to confirm or select their data residency region during the onboarding flow, with automatic inference based on IP address, and manual selection as a fallback when inference fails or when users wish to choose an alternative supported region.
 
 ## Rationale
 Data residency requirements are increasingly important for regulatory compliance and user trust. Users need transparency and control over where their data is stored and processed. Providing both inferred and manual selection options improves user experience by reducing friction while ensuring compliance with data localization laws. This requirement supports the system's ability to operate in multiple jurisdictions while giving users appropriate control over their data residency.
@@ -15,7 +15,7 @@ Data residency requirements are increasingly important for regulatory compliance
 ## Acceptance Criteria
 - Given a user completing the onboarding flow after account creation
 - When the user reaches the data residency confirmation step
-- Then the system shall attempt to infer the user's residency region from IP address and/or phone number
+- Then the system shall attempt to infer the user's residency region from IP address
 - And when inference is confident and the region is supported (minimum: Europe), the system shall pre-select that inferred region in the UI
 - And when inference fails or the inferred region is unsupported, the system shall present a region selection interface without pre-selection
 - And when presenting region selection, the system shall always include Europe as the minimum supported residency region option
@@ -32,7 +32,7 @@ Data residency requirements are increasingly important for regulatory compliance
 ## Explicit Exclusions
 - Data residency options beyond those explicitly configured as supported by the system (initial slice supports Europe plus any additional regions configured for user choice)
 - Automatic residency changes based on detected location changes after onboarding completion
-- Residency selection during the initial account creation step (separate pre-onboarding step)
+- Requiring residency selection to complete initial account creation; residency confirmation occurs during onboarding
 - Ability to change residency after initial onboarding completion (residency is fixed after onboarding)
 - Residency-based feature flags or conditional functionality within the application
 - Data partitioning, sharding, or isolation strategies based solely on residency region
@@ -46,14 +46,14 @@ Data residency requirements are increasingly important for regulatory compliance
 - Must provide clear UI distinction between inferred and user-selected residency indications
 - Must prevent progression past the residency confirmation step without a valid residency selection
 - Must log all residency determination attempts (successful inference, failed inference, user selection) for audit compliance
-- Must not retain raw IP address or phone number data used for inference longer than necessary for the determination process
+- Must not retain raw IP address used for inference longer than necessary for the determination process
 - Must comply with GDPR and similar regulations regarding user consent for data processing location disclosure
 - Must provide residency explanation in plain language understandable to non-technical users
-- Must ensure that residency selection UI is accessible per WCAG 2.1 AA guidelines
+- Must ensure that residency selection UI is accessible per WCAG 2.2 AA guidelines
 - Must handle cases where users are traveling or using networks that obscure true location appropriately
 
 ## Validation Method
-- Automated test: Unit tests for residency inference logic with various IP address and phone number inputs
+- Automated test: Unit tests for residency inference logic with various IP address input
 - Automated test: Integration tests verifying the complete onboarding flow including residency selection step
 - Automated test: UI tests confirming correct visual distinction between inferred and user-selected states
 - Manual QA: End-to-end testing of onboarding flow with various network configurations (VPN, proxy, mobile)
@@ -94,7 +94,6 @@ Approved artifacts this requirement should be interpreted with.
   - NIST Privacy Framework
   - Various country-specific data localization laws and regulations (as reference for supported regions)
   - MaxMind GeoIP2 documentation (as reference for IP-based inference implementation)
-  - libphonenumber documentation (as reference for phone number-based inference implementation)
 
 ## Traceability
 Planning objects this requirement supports or constrains.

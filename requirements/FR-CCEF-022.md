@@ -50,7 +50,7 @@ Approved artifacts this requirement should be interpreted with.
 - API / Data Contracts:
   - Language Preference API Specification
 - Policies / Regulations:
-  - WCAG 2.1 Success Criterion 3.1.1 (Language of Page)
+  - WCAG 2.2 Success Criterion 3.1.1 (Language of Page)
 - Design Artifacts:
   - ccef-ui-ux/prototype/index.html (Language selector component)
 
