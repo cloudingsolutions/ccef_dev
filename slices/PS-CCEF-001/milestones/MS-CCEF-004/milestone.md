@@ -2,24 +2,24 @@
 
 - Milestone ID: MS-CCEF-004
 - Product Slice ID: PS-CCEF-001
-- Title: Account Settings and Full Integration
-- Lifecycle State: Approved
+- Title: Account Settings Management
+- Lifecycle State: Ready for Approval
 
 ## Objective
 
-Enable users to manage their basic account information including name, language preference, and contact preferences through the account settings interface, while ensuring all previously implemented features remain functional and integrated.
+Enable authenticated users to view and update their basic account information including name, language preference, and contact preferences through a secure account settings interface with validation, persistence, and audit trails.
 
 ## Dependencies
 
-- Predecessor Milestones: MS-CCEF-001, MS-CCEF-002, MS-CCEF-003
-- Included Requirement IDs: FR-CCEF-001, FR-CCEF-002, FR-CCEF-003, FR-CCEF-004, FR-CCEF-005, FR-CCEF-006, FR-CCEF-007, FR-CCEF-009, FR-CCEF-015, FR-CCEF-018, FR-CCEF-019, FR-CCEF-020, FR-CCEF-021, FR-CCEF-022, FR-CCEF-023, FR-CCEF-024, FR-CCEF-025, FR-CCEF-026, FR-CCEF-027, FR-CCEF-028, FR-CCEF-029, FR-CCEF-030, FR-CCEF-031, FR-CCEF-032, NFR-CCEF-001, NFR-CCEF-002, NFR-CCEF-003, NFR-CCEF-004, NFR-CCEF-005, NFR-CCEF-006, NFR-CCEF-007, NFR-CCEF-008, NFR-CCEF-009
+- Predecessor Milestones: MS-CCEF-003
+- Included Requirement IDs: FR-CCEF-024, FR-CCEF-025, FR-CCEF-026, FR-CCEF-027, FR-CCEF-028, FR-CCEF-029, FR-CCEF-030
 
 ## Explicit Exclusions
 
-- UC-CCEF-002 (phone number verification for initial account creation - explicitly excluded)
-- FR-CCEF-008 (password strength requirements - explicitly excluded)
-- FR-CCEF-010, FR-CCEF-011, FR-CCEF-012, FR-CCEF-013, FR-CCEF-014, FR-CCEF-016, FR-CCEF-017 (various excluded functional requirements)
-- Deferred / adjacent product intent: organization/team management, complex authorization schemes, advanced account recovery, social logins beyond Google/Apple, advanced privacy controls, data export, data retention policies, account closure, subscription management, API access, multi-currency, role-based views, audit logging beyond basics, data residency beyond Europe, additional privacy frameworks, onboarding tours, in-app messaging, log aggregation, API rate limiting beyond basics, multi-tenant architecture, data partitioning, accessibility enhancements beyond WCAG 2.2 AA, internationalization frameworks
+- UC-CCEF-002 (Out of Scope - covered in UC-CCEF-001 for both Google and Apple SSO)
+- FR-CCEF-008, FR-CCEF-010, FR-CCEF-011, FR-CCEF-012, FR-CCEF-013, FR-CCEF-014, FR-CCEF-016, FR-CCEF-017 (Out of Scope functional requirements)
+- UC-CCEF-009 and beyond (if any exist)
+- Deferred / adjacent product intent: organization/team management, complex authorization schemes, additional languages beyond English/Swedish, advanced account recovery, social login beyond Google/Apple, advanced privacy controls, data export, data retention policies, account closure, subscription management, API access, multi-currency, role-based views, audit logging for compliance, data residency beyond Europe, additional privacy frameworks, onboarding flows beyond account creation, product tours, in-app messaging, log aggregation, API rate limiting, multi-tenant architecture, data partitioning, accessibility enhancements beyond WCAG 2.2 AA, internationalization frameworks.
 - Advanced profile information (profile picture, bio, etc.)
 - Social media account linking/unlinking
 - Two-factor authentication setup or management
@@ -28,61 +28,72 @@ Enable users to manage their basic account information including name, language 
 - Provider connection management (covered in other slices)
 - Account closure or deletion (deferred to later slice)
 - Language preferences beyond English and Swedish
+- Phone number verification and SMS consent setup (covered in Milestone 2 - note: contact preferences in this milestone are for email notifications, not SMS)
+- Data residency confirmation (covered in Milestone 3)
+- Language selection and legal acceptance (covered in Milestone 1)
 
 ## Traceability
 
-- Included Use Case IDs: UC-CCEF-001, UC-CCEF-003, UC-CCEF-004, UC-CCEF-005, UC-CCEF-006, UC-CCEF-007, UC-CCEF-008
+- Included Use Case IDs: UC-CCEF-006
 - Architectural Assumptions:
-  - The system follows a modular monolith architecture with clear boundaries (ADR-0001)
-  - Account settings are implemented as a separate module that reads and writes user profile data
-  - The system uses role-based access control to ensure only authenticated users can access account settings
-  - User profile data (name, email, language preference, phone number, consent) is stored in a secure, encrypted format
-  - The system implements input validation and output encoding to prevent injection attacks
-  - Audit logs for account modifications are encrypted with AES-256-GCM
-  - The system uses database transactions to ensure consistency when updating multiple profile fields
-  - HTTP 1.2 or higher is used for all client-server communications
-  - The system implements CSRF protection for account settings forms
-  - Session timeout and re-authentication are required for sensitive account settings changes
-- Required ADRs: ADR-0001, ADR-0002, ADR-0003
+  - The system follows a modular monolith approach with clear boundaries as defined in ADR-0001.
+  - GDPR-compliant data handling practices are implemented as specified in ADR-0002, including consent management and data residency controls.
+  - The system uses a user management module for storing and retrieving user profile information (name, email, language preference, etc.).
+  - Contact preferences are stored as part of the user profile or in a dedicated preferences module.
+  - The system uses a separate privacy module for managing consent records as outlined in ADR-0002.
+  - All user profile updates go through validation and authorization checks before being persisted.
+  - Audit logging captures all account modification attempts for compliance and security monitoring.
+  - Language preference is stored as part of the user profile and used for UI localization throughout the system.
+  - Residency region is stored as part of the user profile but is display-only in account settings after onboarding.
+  - The system maintains separation between editable profile information (name, language, contact preferences) and immutable onboarding data (auto-inferred residency, legal acceptance timestamps).
+  - The system implements immediate UI updates for language preference changes without requiring full page reload.
+  - Input validation is performed both client-side (for immediate feedback) and server-side (for security).
+- Required ADRs: ADR-0001, ADR-0002
 - Quality Gates:
-  - Account settings must only be accessible to authenticated users
-  - All input fields must have proper validation and sanitization
-  - Changed information must persist across sessions and be reflected throughout the interface
-  - Audit trail must record all account modification attempts
-  - System must provide clear success and error feedback for all operations
-  - All previously implemented features (SSO, OTP, phone verification, language, legal, residency) must remain functional after account settings updates
-  - No personal data may be lost or corrupted when updating account information
+  - Code review by system architect and security specialist
+  - Unit test coverage ≥ 90% for new functionality
+  - Integration tests covering name update, language preference change, contact preferences modification, and validation flows
+  - End-to-end test scenarios for account settings usage
+  - Security review focusing on input validation, authorization checks, and data protection for profile updates
+  - Compliance review verifying GDPR adherence for handling of personal data in account settings
+  - Performance testing for account settings load and save operations under expected user load
+  - Accessibility testing (WCAG 2.2 AA) for form inputs, validation feedback, and language change announcements
+  - User acceptance testing with representative users for account settings usage and preference updates
 - Demo Criteria:
-  - Demonstrate viewing current account information (name, email, language)
-  - Show updating display name with valid input
-  - Show updating display name with invalid input and seeing error message
-  - Demonstrate changing language preference (English to Swedish or vice versa)
-  - Show interface updating to new language immediately after save
-  - Demonstrate toggling email notification preferences
-  - Show confirmation message after successful account settings update
-  - Demonstrate that all authentication methods (SSO, OTP) still work after account settings change
-  - Show that phone number can be updated in account settings (if verified)
-  - Show that consent records remain intact and auditable
-  - Demonstrate that language preference change persists across sessions
+  - Demonstrate viewing account information: navigate to account settings after login and see current name, email, and language preference displayed.
+  - Demonstrate name update: enter new valid display name, save changes, and see confirmation with updated name displayed throughout interface.
+  - Demonstrate language preference change: select alternative language (English/Swedish), save changes, and see immediate interface translation.
+  - Demonstrate contact preferences update: toggle email notification switches, save changes, and see confirmation.
+  - Demonstrate validation error handling: enter invalid name (too short, special characters), see clear error messages and field highlighting.
+  - Demonstrate audit trail recording: verify that account modification attempts (successful and failed) are recorded in audit trail (via admin interface or logs).
+  - Demonstrate persistence across sessions: log out and log back in, verify that updated name and language preference are retained.
+  - Demonstrate accessibility announcements: use screen reader to verify language change is announced when preference is updated.
+  - Demonstrate residency display-only: navigate to account settings and see residency region displayed but not editable.
+  - Demonstrate immediate UI update: change language preference and observe instant translation without page reload flicker.
 - Acceptance Criteria:
-  - User can view their current account information (name, email, language preference)
-  - User can update their display name with validation (reasonable length, no prohibited characters)
-  - User can update their default language preference (English/Swedish)
-  - User can manage basic contact preferences (email notifications, etc.)
-  - System validates all inputs before saving changes
-  - System provides immediate feedback on success or validation errors
-  - Changed information persists across sessions and is reflected throughout the interface
-  - System maintains audit trail of account modification attempts
-  - User receives confirmation when changes are successfully saved
-  - Invalid inputs are rejected with clear, specific error messages
-  - Account modification attempts are recorded in the audit trail
-  - All previously implemented features (SSO account creation, email OTP, phone verification, language selection, legal acceptance, data residency) remain functional and accessible
-  - User can navigate to account settings from the user menu after authentication
-  - System prevents unauthorized access to account settings
-  - All GDPR-compliant consent records remain intact and auditable when updating account information
-  - Language preference changes in account settings take effect immediately across the interface
-  - Phone number can be updated or removed in account settings with appropriate consent handling
-  - System maintains session integrity during account settings updates
+  - Authenticated user can view their current account information (name, email, language preference) in account settings.
+  - User can update their display name with validation (reasonable length, no prohibited characters).
+  - User can update their default language preference (English/Swedish) and see immediate interface update.
+  - User can manage basic contact preferences (email notifications, etc.) through toggle switches or similar controls.
+  - System validates all inputs before saving changes (name format, language selection, etc.).
+  - System provides immediate feedback on success or validation errors (inline messages, field highlighting).
+  - Changed information persists across sessions and is reflected throughout the interface after reload.
+  - System maintains audit trail of account modification attempts (both successful and failed).
+  - User receives confirmation when changes are successfully saved (toast/banner notification).
+  - Invalid inputs are rejected with clear, specific error messages (e.g., 'Name must be between 2 and 50 characters').
+  - Account modification attempts are recorded in the audit trail with timestamp, user ID, and changed fields.
+  - Language preference change triggers appropriate accessibility announcements for screen reader users.
+  - Contact preference changes are recorded and affect future notification delivery (where applicable).
+  - System does not allow modification of residency region after onboarding (display-only in account settings).
+  - System does not allow modification of consent settings for SMS in account settings (handled via separate flow if needed).
+  - Advanced profile information (profile picture, bio, etc.) is not available in this slice.
+  - Social media account linking/unlinking is not available in this slice.
+  - Two-factor authentication setup or management is not available in this slice.
+  - Data export or deletion requests are not available in this slice (covered in privacy use cases).
+  - Payment method or billing information management is not available in this slice.
+  - Provider connection management is not available in this slice (covered in other slices).
+  - Account closure or deletion is not available in this slice (deferred to later slice).
+  - Language preferences beyond English and Swedish are not available in this slice.
 
 ## Release Branches
 
@@ -96,43 +107,17 @@ Enable users to manage their basic account information including name, language 
 
 | Requirement ID | Covered In This Milestone? | Fully/Partially Covered | Validation Method |
 |---|---|---|---|
-| FR-CCEF-001 | True | Complete | Verified to still work after account settings changes |
-| FR-CCEF-002 | True | Complete | Verified to still work after account settings changes |
-| FR-CCEF-003 | True | Complete | Verified to still work after account settings changes |
-| FR-CCEF-004 | True | Complete | Verified to still work after account settings changes |
-| FR-CCEF-005 | True | Complete | Verified to still work after account settings changes |
-| FR-CCEF-006 | True | Complete | Verified to still work after account settings changes |
-| FR-CCEF-007 | True | Complete | Verified to still work after account settings changes |
-| FR-CCEF-009 | True | Complete | Verified to still work after account settings changes |
-| FR-CCEF-015 | True | Complete | Verified to still work after account settings changes |
-| FR-CCEF-018 | True | Complete | Verified to still work after account settings changes |
-| FR-CCEF-019 | True | Complete | Verified to still work after account settings changes |
-| FR-CCEF-020 | True | Complete | Verified to still work after account settings changes |
-| FR-CCEF-021 | True | Complete | Verified to still work after account settings changes |
-| FR-CCEF-022 | True | Complete | Verified to still work after account settings changes |
-| FR-CCEF-023 | True | Complete | Verified to still work after account settings changes |
-| FR-CCEF-024 | True | Complete | Unit tests for name validation logic; integration tests verifying name update flow |
-| FR-CCEF-025 | True | Complete | Unit tests for language update logic; integration tests verifying language change in settings |
-| FR-CCEF-026 | True | Complete | Unit tests for contact preference logic; integration tests verifying email notification toggle |
-| FR-CCEF-027 | True | Complete | Unit tests for input validation on name field; integration tests verifying rejection of invalid names |
-| FR-CCEF-028 | True | Complete | Unit tests for audit logging of account changes; integration tests verifying log entries |
-| FR-CCEF-029 | True | Complete | Unit tests for feedback mechanism on save success; integration tests verifying success messages |
-| FR-CCEF-030 | True | Complete | Unit tests for validation error messages; integration tests verifying clear error feedback |
-| FR-CCEF-031 | True | Complete | Verified to still work after account settings changes |
-| FR-CCEF-032 | True | Complete | Verified to still work after account settings changes |
-| NFR-CCEF-001 | True | Complete | Verified to still work after account settings changes |
-| NFR-CCEF-002 | True | Complete | Load testing verifying overall authentication benchmarks still met after account settings updates |
-| NFR-CCEF-003 | True | Complete | Verified to still work after account settings changes |
-| NFR-CCEF-004 | True | Complete | Verified to still work after account settings changes |
-| NFR-CCEF-005 | True | Complete | Verified to still work after account settings changes |
-| NFR-CCEF-006 | True | Complete | Verified to still work after account settings changes |
-| NFR-CCEF-007 | True | Complete | Verified to still work after account settings changes |
-| NFR-CCEF-008 | True | Complete | Verified to still work after account settings changes |
-| NFR-CCEF-009 | True | Complete | Verified to still work after account settings changes |
+| FR-CCEF-024 | True | Full | Unit tests for display name validation, integration tests with user repository, end-to-end test scenarios for name update. |
+| FR-CCEF-025 | True | Full | Unit tests for language preference validation, integration tests with user repository, end-to-end test scenarios for language preference update. |
+| FR-CCEF-026 | True | Full | Unit tests for contact preferences validation, integration tests with preferences repository, end-to-end test scenarios for email notification toggle. |
+| FR-CCEF-027 | True | Full | Unit tests for input validation service, integration tests with validation rules, end-to-end test scenarios for combined field validation. |
+| FR-CCEF-028 | True | Full | Unit tests for real-time validation feedback, integration tests with UI components, end-to-end test scenarios for inline error display. |
+| FR-CCEF-029 | True | Full | Unit tests for persistence layer, integration tests with user/preferences repositories, end-to-end test scenarios for data persistence across sessions. |
+| FR-CCEF-030 | True | Full | Unit tests for success confirmation service, integration tests with notification system, end-to-end test scenarios for toast/banner display after save. |
 
 ### Increment Integrity
 
 - Can this milestone be demoed independently? Yes.
 - Can this milestone be deployed safely? Yes.
-- What feature flags or disabled paths are required? All features are enabled by default; no feature flags are used to disable core functionality in this milestone
-- What user-visible behavior is intentionally incomplete? Advanced profile information (profile picture, bio) is not available; social media linking is not available; two-factor authentication is not available; data export/deletion requests are not available; payment/billing information is not available; provider connection management is not available; account closure/deletion is not available; language preferences beyond English/Swedish are not available
+- What feature flags or disabled paths are required? Advanced profile features (picture, bio, etc.) are disabled/not available; social media linking is disabled/not available; 2FA setup is disabled/not available; data export/deletion is disabled/not available; payment/billing management is disabled/not available; provider connection management is disabled/not available; account closure/deletion is disabled/not available; language preferences beyond English/Swedish are disabled/not available.
+- What user-visible behavior is intentionally incomplete? Users cannot add profile pictures or bios; users cannot link/unlink social media accounts; users cannot set up or manage two-factor authentication; users cannot export or delete their data; users cannot manage payment methods or billing information; users cannot manage provider connections; users cannot close or delete their accounts; users cannot select language preferences beyond English or Swedish.

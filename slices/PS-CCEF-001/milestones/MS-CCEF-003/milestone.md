@@ -2,119 +2,92 @@
 
 - Milestone ID: MS-CCEF-003
 - Product Slice ID: PS-CCEF-001
-- Title: Onboarding Completion - Language, Legal, Residency
-- Lifecycle State: Approved
+- Title: Data Residency Confirmation
+- Lifecycle State: Ready for Approval
 
 ## Objective
 
-Enable users to select their preferred language (English or Swedish) during onboarding, accept legal terms & conditions and privacy policy, and confirm or select their data residency region, completing the GDPR-compliant onboarding flow.
+Enable users to confirm or select their data residency region during onboarding, with system inference from IP address (Europe as minimum) and manual selection where legally permitted, ensuring GDPR compliance and transparent data handling.
 
 ## Dependencies
 
-- Predecessor Milestones: MS-CCEF-001, MS-CCEF-002
-- Included Requirement IDs: FR-CCEF-022, FR-CCEF-023, FR-CCEF-031, FR-CCEF-032, NFR-CCEF-008, NFR-CCEF-009
+- Predecessor Milestones: MS-CCEF-002
+- Included Requirement IDs: FR-CCEF-032
 
 ## Explicit Exclusions
 
-- UC-CCEF-002 (phone number verification for initial account creation - explicitly excluded)
-- FR-CCEF-008 (password strength requirements - explicitly excluded)
-- FR-CCEF-010, FR-CCEF-011, FR-CCEF-012, FR-CCEF-013, FR-CCEF-014, FR-CCEF-016, FR-CCEF-017 (various excluded functional requirements)
-- Deferred / adjacent product intent: organization/team management, complex authorization schemes, advanced account recovery, social logins beyond Google/Apple, advanced privacy controls, data export, data retention policies, account closure, subscription management, API access, multi-currency, role-based views, audit logging beyond basics, data residency beyond Europe, additional privacy frameworks, onboarding tours, in-app messaging, log aggregation, API rate limiting beyond basics, multi-tenant architecture, data partitioning, accessibility enhancements beyond WCAG 2.2 AA, internationalization frameworks
-- Languages other than English and Swedish in the initial release
-- Automatic language detection based on IP address or geolocation
-- Content localization for non-user-facing items (emails, reports, etc.)
-- Right-to-left (RTL) language support
-- Language-based feature flags or conditional functionality
-- Automatic translation of user-generated content
-- Ability to modify or negotiate terms of service
-- Version history or diff views of legal documents
-- Electronic signature capture beyond checkbox acceptance
-- Language options beyond English and Swedish for legal documents
-- Print-friendly or downloadable versions of the documents
-- Multilingual support for the legal documents themselves
-- A/B testing or variation of legal document presentation
-- Caching of legal documents for extended periods (must check for updates)
-- Data residency options beyond those explicitly supported by the system
-- Automatic residency changes based on detected location changes
-- Requiring residency selection to complete initial account creation; residency confirmation occurs during onboarding
+- UC-CCEF-002 (Out of Scope - covered in UC-CCEF-001 for both Google and Apple SSO)
+- FR-CCEF-008, FR-CCEF-010, FR-CCEF-011, FR-CCEF-012, FR-CCEF-013, FR-CCEF-014, FR-CCEF-016, FR-CCEF-017 (Out of Scope functional requirements)
+- UC-CCEF-009 and beyond (if any exist)
+- Deferred / adjacent product intent: organization/team management, complex authorization schemes, additional languages beyond English/Swedish, advanced account recovery, social login beyond Google/Apple, advanced privacy controls, data export, data retention policies, account closure, subscription management, API access, multi-currency, role-based views, audit logging for compliance, data residency beyond Europe, additional privacy frameworks, onboarding flows beyond account creation, product tours, in-app messaging, log aggregation, API rate limiting, multi-tenant architecture, data partitioning, accessibility enhancements beyond WCAG 2.2 AA, internationalization frameworks.
+- Automatic residency changes based on detected location changes after initial setup
+- Requiring residency selection to complete initial account creation (explicitly excluded per UC-CCEF-008)
 - Ability to change residency after initial onboarding completion
 - Residency-based feature flags or conditional functionality
 - Data partitioning or sharding based on residency
 - Legal advice or interpretation of residency regulations
 - Integration with external residency verification services
 - Residency confirmation via government ID or documentation
+- Phone number verification and SMS consent setup (covered in Milestone 2)
+- Account settings for updating name, language, and contact preferences (covered in Milestone 4)
+- Language selection and legal acceptance (covered in Milestone 1)
 
 ## Traceability
 
-- Included Use Case IDs: UC-CCEF-005, UC-CCEF-007, UC-CCEF-008
+- Included Use Case IDs: UC-CCEF-008
 - Architectural Assumptions:
-  - The system follows a modular monolith architecture with clear boundaries (ADR-0001)
-  - Language translations are managed via a standard i18n framework with message catalogs
-  - The system stores user language preference as a locale string (e.g., 'en', 'sv')
-  - Legal documents are stored as versioned HTML or markdown files
-  - The system implements a consent management system that records versioned consent for legal documents
-  - Data residency is determined via IP-to-location lookup service with configurable allowed regions
-  - The system stores residency region as a string (e.g., 'EU', 'DE', 'FR')
-  - The system uses AES-256-GCM to encrypt audit log entries containing PII (residency, consent)
-  - HTTP 1.2 or higher is used for all external service calls (IP lookup, etc.)
-  - The system implements caching for IP lookup service to improve performance
-  - Residency region cannot be changed after onboarding to ensure data storage compliance
+  - The system follows a modular monolith approach with clear boundaries as defined in ADR-0001.
+  - GDPR-compliant data handling practices are implemented as specified in ADR-0002, including data residency controls and constraints.
+  - The system uses a geolocation service or IP-to-location mapping for residency inference, with configurable confidence thresholds.
+  - Supported residency regions are configurable based on legal and regulatory considerations, with Europe as minimum.
+  - Data storage locations are mapped to residency regions, with actual data routing handled at the infrastructure level.
+  - The system uses a separate privacy module for managing residency records and consent as outlined in ADR-0002.
+  - Residency data is stored as part of the user profile or in a dedicated privacy data store.
+  - Audit logging captures residency determination events for compliance and security monitoring.
+  - The system does not implement automatic residency updates based on location changes to ensure stability and compliance.
+  - Residency confirmation occurs during onboarding but is not required to complete initial account creation (per UC-CCEF-008 Explicit Exclusions).
+  - The system maintains separation between residency data and other personal data for clear auditability.
 - Required ADRs: ADR-0001, ADR-0002
 - Quality Gates:
-  - Language detection must respect user's browser/OS language settings
-  - Language selection must be offered as a clear choice between English and Swedish
-  - All user-facing text must accurately translate to the selected language
-  - Legal documents must be presented in the user's selected language
-  - Acceptance checkboxes for legal documents must not be pre-checked
-  - User must not be able to proceed without accepting both legal documents
-  - Data residency inference must default to Europe as minimum supported region
-  - System must prevent selection of unsupported residency regions
-  - Selected or inferred residency must be recorded with timestamp and user ID
-  - Residency region must be viewable but not changeable in account settings after onboarding
+  - Code review by system architect and privacy/compliance specialist
+  - Unit test coverage ≥ 90% for new functionality
+  - Integration tests covering IP inference, region validation, and selection flows
+  - End-to-end test scenarios for residency confirmation process
+  - Privacy and compliance review verifying GDPR adherence for data residency handling and transparency
+  - Security review focusing on geolocation service integration and data protection
+  - Performance testing for residency inference under load
+  - Accessibility testing (WCAG 2.2 AA) for region selection interface
+  - User acceptance testing with representative users for residency confirmation and understanding of data residency implications
 - Demo Criteria:
-  - Demonstrate language detection and pre-selection based on browser/OS
-  - Show user manually selecting English or Swedish language
-  - Show interface updating to selected language in real-time
-  - Demonstrate language persistence across sessions
-  - Show terms & conditions and privacy policy presentation during onboarding
-  - Demonstrate explicit acceptance of legal documents (scroll to bottom, unchecked checkbox)
-  - Show system preventing progression without legal acceptance
-  - Demonstrate data residency inference from IP address
-  - Show user selecting alternative residency region where permitted
-  - Show system recording and displaying residency region
-  - Demonstrate residency region view in account settings (read-only)
+  - Demonstrate residency inference: simulate IP address from a European country, observe system pre-selecting European region during onboarding.
+  - Demonstrate residency inference failure: simulate IP address from unsupported region, observe system prompting for manual region selection.
+  - Demonstrate region selection: choose a supported non-European region (where legally permitted) and see confirmation.
+  - Demonstrate inferred vs. user-selected distinction: check that UI and records clearly show whether residency was inferred or user-selected.
+  - Demonstrate unsupported region prevention: attempt to select an unsupported region and see clear explanation why it's not available.
+  - Demonstrate audit trail recording: verify that residency determination attempts and outcomes are recorded in audit trail (via admin interface or logs).
+  - Demonstrate residency display in account settings: navigate to account settings after onboarding and view recorded residency (display-only).
+  - Demonstrate edge case handling: simulate VPN/proxy usage, observe system prompting for manual selection due to lowered inference confidence.
+  - Demonstrate no silent assignment: confirm that system never assigns arbitrary region when inference fails; always requires user selection.
+  - Demonstrate explanation display: view explanation of what data residency means for the user during onboarding and in account settings.
 - Acceptance Criteria:
-  - System detects user's browser or operating system language
-  - System pre-selects the detected language if it's English or Swedish, otherwise defaults to English
-  - User can manually select English or Swedish from the language options
-  - User's selection is saved to their account profile
-  - Interface immediately updates to reflect the selected language
-  - Language preference persists across sessions and page reloads
-  - User can change their language preference at any time in account settings
-  - System provides language names in both English and Swedish for selection clarity
-  - All user-facing text in the interface translates to the selected language
-  - During onboarding, users are presented with and must accept the terms & conditions and privacy policy before completing account creation
-  - System presents clear, readable versions of both terms & conditions and privacy policy
-  - Documents are presented in the user's selected language (English or Swedish)
-  - User must scroll to the bottom of each document to enable the acceptance checkbox
-  - Acceptance checkboxes are not pre-checked, requiring explicit user action
-  - System records acceptance of both documents with timestamp and user ID
-  - User cannot proceed with account creation without accepting both documents
-  - System provides links to view the full documents in a modal or new page
-  - Acceptance is stored durably and can be retrieved for audit purposes
-  - System indicates which specific version of each document was accepted
-  - During onboarding, the system infers the user's data residency region from IP address, with Europe as the minimum supported region
-  - When inference is confident and region is supported, system pre-selects that region
-  - When inference fails or region is unsupported, system prompts user to select region
-  - Europe is presented as the minimum supported residency region
-  - Users can select another supported region where regulation permits choice
-  - System clearly indicates when residency is inferred vs. user-selected
-  - System prevents selection of unsupported regions with clear explanation
-  - System does not silently assign users to arbitrary regions when residency cannot be determined
-  - Selected or inferred residency is recorded with timestamp and user ID
-  - System provides explanation of what data residency means for the user
-  - User can view their recorded residency in account settings (but not change it after onboarding)
-  - System handles edge cases like VPNs, proxies, and mobile roaming appropriately
+  - System attempts to infer user's data residency region from IP address using a geolocation service.
+  - When inference is confident and region is supported (Europe or other legally permitted regions), system pre-selects that region during onboarding.
+  - When inference fails or region is unsupported, system prompts user to select region from a list of supported regions.
+  - Europe is presented as the minimum supported residency region during the selection process.
+  - Users can select another supported region where regulation permits choice (based on current legal considerations).
+  - System clearly indicates when residency is inferred vs. user-selected in the UI and in stored records.
+  - System prevents selection of unsupported regions with clear explanation why the region is not available.
+  - System does not silently assign users to arbitrary regions when residency cannot be determined; instead, it requires manual selection.
+  - Selected or inferred residency is recorded with timestamp and user ID in the user profile or privacy module.
+  - System provides explanation of what data residency means for the user (e.g., where their data is stored, applicable regulations).
+  - User can view their recorded residency in account settings (display-only, not changeable after onboarding).
+  - System handles edge cases like VPNs, proxies, and mobile roaming appropriately by lowering inference confidence and prompting for manual selection.
+  - Residency determination attempts and outcomes (success, failure, user selection) are recorded in the audit trail for compliance.
+  - If the inferred region is unsupported, system explains why the region is not available and requires user to select a supported region.
+  - If residency cannot be confidently inferred, system presents manual selection interface without silently assigning an arbitrary region.
+  - System does not automatically change residency based on detected location changes after initial setup.
+  - Residency-based feature flags or conditional functionality are not implemented in this slice.
+  - Data partitioning or sharding based on residency is not implemented in this slice.
 
 ## Release Branches
 
@@ -128,43 +101,11 @@ Enable users to select their preferred language (English or Swedish) during onbo
 
 | Requirement ID | Covered In This Milestone? | Fully/Partially Covered | Validation Method |
 |---|---|---|---|
-| FR-CCEF-001 | True | Complete | Covered in Milestone 1; verified to still work |
-| FR-CCEF-002 | True | Complete | Covered in Milestone 1; verified to still work |
-| FR-CCEF-003 | True | Complete | Covered in Milestone 1; verified to still work |
-| FR-CCEF-004 | True | Complete | Covered in Milestone 1; verified to still work |
-| FR-CCEF-005 | True | Complete | Covered in Milestone 1; verified to still work |
-| FR-CCEF-006 | True | Complete | Covered in Milestone 1; verified to still work |
-| FR-CCEF-007 | True | Complete | Covered in Milestone 1; verified to still work |
-| FR-CCEF-009 | True | Complete | Covered in Milestone 1; verified to still work |
-| FR-CCEF-015 | True | Complete | Covered in Milestone 1; verified to still work |
-| FR-CCEF-018 | True | Complete | Covered in Milestone 2; verified to still work |
-| FR-CCEF-019 | True | Complete | Covered in Milestone 2; verified to still work |
-| FR-CCEF-020 | True | Complete | Covered in Milestone 2; verified to still work |
-| FR-CCEF-021 | True | Complete | Covered in Milestone 2; verified to still work |
-| FR-CCEF-022 | True | Complete | Unit tests for language detection logic; integration tests verifying language selection flow |
-| FR-CCEF-023 | True | Complete | Unit tests for language persistence logic; integration tests verifying language change in settings |
-| FR-CCEF-024 | False | Not Covered | N/A |
-| FR-CCEF-025 | False | Not Covered | N/A |
-| FR-CCEF-026 | False | Not Covered | N/A |
-| FR-CCEF-027 | False | Not Covered | N/A |
-| FR-CCEF-028 | False | Not Covered | N/A |
-| FR-CCEF-029 | False | Not Covered | N/A |
-| FR-CCEF-030 | False | Not Covered | N/A |
-| FR-CCEF-031 | True | Complete | Unit tests for legal document presentation logic; integration tests verifying acceptance flow |
-| FR-CCEF-032 | True | Complete | Unit tests for IP-based residency inference; integration tests verifying residency selection flow |
-| NFR-CCEF-001 | True | Complete | Covered in Milestone 1; verified to still work |
-| NFR-CCEF-002 | True | Complete | Covered in Milestone 1; verified to still work (benchmarks still met) |
-| NFR-CCEF-003 | True | Complete | Covered in Milestone 2; verified to still work |
-| NFR-CCEF-004 | True | Complete | Covered in Milestone 1; verified to still work |
-| NFR-CCEF-005 | True | Complete | Covered in Milestone 1; verified to still work |
-| NFR-CCEF-006 | True | Complete | Covered in Milestone 1; verified to still work |
-| NFR-CCEF-007 | True | Complete | Covered in Milestone 1; verified to still work |
-| NFR-CCEF-008 | True | Complete | Unit tests for language preference storage; integration tests verifying language change in settings |
-| NFR-CCEF-009 | True | Complete | Unit tests for legal consent record integrity; integration tests verifying tamper-evidence |
+| FR-CCEF-032 | True | Full | Unit tests for IP-based residency inference, integration tests with mock geolocation service, end-to-end test scenarios for residency confirmation flow. |
 
 ### Increment Integrity
 
 - Can this milestone be demoed independently? Yes.
 - Can this milestone be deployed safely? Yes.
-- What feature flags or disabled paths are required? Account settings UI is hidden; SMS consent feature can be toggled off; language selection limited to English/Swedish; legal acceptance and data residency steps can be skipped via feature flag
-- What user-visible behavior is intentionally incomplete? Account settings interface is not accessible; SMS alerts are not sent (only consent is captured from Milestone 2); language preference cannot be changed after initial selection (no settings access); legal acceptance and data residency steps are not presented if feature flags are off
+- What feature flags or disabled paths are required? Automatic residency updates based on location changes are disabled/not available; residency-based feature flags are disabled/not available; data partitioning/sharding by residency is disabled/not available.
+- What user-visible behavior is intentionally incomplete? Users cannot change their data residency region after initial onboarding completion; the system does not automatically update residency based on detected location changes; residency-based feature flags or conditional functionality are not available; data partitioning or sharding based on residency is not implemented.
